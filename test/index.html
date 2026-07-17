@@ -218,6 +218,21 @@
 
     .media-placeholder span { display: block; margin-bottom: 8px; font-size: 38px; }
 
+    .demo-video {
+      display: block;
+      width: 100%;
+      margin-top: 18px;
+      border-radius: 12px;
+      background: #071725;
+      box-shadow: 0 12px 28px rgba(20, 55, 86, 0.16);
+      aspect-ratio: 16 / 9;
+    }
+
+    .video-caption {
+      margin-top: 12px !important;
+      font-size: 14px;
+    }
+
     .app-header {
       display: flex;
       align-items: center;
@@ -541,9 +556,13 @@
       <p class="section-copy">这里先建立视频和 GIF 的内容位置。收到素材后，可以直接添加操作演示、调参过程或缺陷样例，并继续保留手机端播放能力。</p>
       <div class="media-grid">
         <article class="media-card">
-          <h2>视频演示</h2>
-          <p>适合放置 MP4 或 WebM 格式的操作讲解和检测过程。</p>
-          <div class="media-placeholder"><div><span aria-hidden="true">▶</span>等待添加视频文件</div></div>
+          <h2>粒子检测操作演示</h2>
+          <p>点击播放可查看实际操作与检测过程，手机端支持全屏播放。</p>
+          <video class="demo-video" controls preload="metadata" playsinline>
+            <source src="media/particle-detection-demo.mp4" type="video/mp4">
+            当前浏览器不支持视频播放，请使用最新版浏览器打开。
+          </video>
+          <p class="video-caption">屏幕录制 · MP4 视频</p>
         </article>
         <article class="media-card">
           <h2>GIF 动图</h2>
