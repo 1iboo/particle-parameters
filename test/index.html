@@ -186,9 +186,8 @@
 
     .parameter-main { padding: clamp(16px, 3vw, 36px); }
 
-    .media-grid {
+    .registration-layout {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 20px;
       margin-top: 34px;
     }
@@ -204,19 +203,41 @@
     .media-card h2 { margin: 0 0 8px; color: var(--navy); }
     .media-card p { margin: 0; color: var(--muted); line-height: 1.65; }
 
-    .media-placeholder {
-      display: grid;
-      min-height: 260px;
+    .registration-table {
       margin-top: 18px;
-      place-items: center;
-      border: 2px dashed #a9c5d1;
+      overflow: hidden;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      background: linear-gradient(135deg, #edf6f7, #f7fafc);
-      color: #4d7181;
-      text-align: center;
     }
 
-    .media-placeholder span { display: block; margin-bottom: 8px; font-size: 38px; }
+    .registration-row {
+      display: grid;
+      grid-template-columns: minmax(160px, 0.8fr) minmax(180px, 0.9fr) minmax(0, 2.3fr);
+    }
+
+    .registration-row > div {
+      padding: 13px 15px;
+      border-right: 1px solid var(--border);
+    }
+
+    .registration-row > div:last-child { border-right: 0; }
+
+    .registration-row.header {
+      background: var(--teal);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .registration-row.data { background: var(--alternate); }
+    .registration-row.data strong { color: var(--navy); }
+
+    .registration-note {
+      margin-top: 14px !important;
+      padding: 12px 14px;
+      border-left: 4px solid var(--teal);
+      border-radius: 6px;
+      background: var(--alternate);
+    }
 
     .demo-video {
       display: block;
@@ -370,7 +391,17 @@
       }
 
       .hero-panel { padding: 16px; }
-      .media-grid { grid-template-columns: 1fr; }
+      .registration-row { grid-template-columns: 1fr; }
+      .registration-row.header { display: none; }
+      .registration-row > div { border-right: 0; border-bottom: 1px solid var(--border); }
+      .registration-row > div:last-child { border-bottom: 0; }
+      .registration-row.data > div::before {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--muted);
+        content: attr(data-label);
+        font-size: 13px;
+      }
 
       .app-header {
         align-items: stretch;
@@ -492,7 +523,7 @@
     <nav class="site-nav" aria-label="主导航">
       <a href="#home" data-view-link="home">首页</a>
       <a href="#parameters" data-view-link="parameters">参数说明</a>
-      <a href="#media" data-view-link="media">新内容</a>
+      <a href="#media" data-view-link="media">定位配准</a>
     </nav>
   </header>
 
@@ -502,10 +533,10 @@
         <div>
           <p class="eyebrow">PARTICLE DETECTION · TEST SITE</p>
           <h1>粒子检测知识与参数中心</h1>
-          <p class="hero-copy">集中查看常用参数说明，并为后续的视频演示、GIF 动图和缺陷案例预留独立内容页。本页面是测试版，不影响现有正式参数网站。</p>
+          <p class="hero-copy">集中查看常用参数说明，并通过独立页面学习定位配准参数和实际操作视频。本页面是测试版，不影响现有正式参数网站。</p>
           <div class="hero-actions">
             <a class="primary-button" href="#parameters" data-view-link="parameters">查看参数说明</a>
-            <a class="secondary-button" href="#media" data-view-link="media">查看新内容页</a>
+            <a class="secondary-button" href="#media" data-view-link="media">查看定位配准</a>
           </div>
         </div>
         <aside class="hero-panel" aria-label="网站内容概览">
@@ -551,23 +582,35 @@
     </section>
 
     <section id="media" class="view media-view" data-view="media" hidden>
-      <p class="eyebrow">NEW CONTENT</p>
-      <h1>新内容</h1>
-      <p class="section-copy">这里先建立视频和 GIF 的内容位置。收到素材后，可以直接添加操作演示、调参过程或缺陷样例，并继续保留手机端播放能力。</p>
-      <div class="media-grid">
+      <p class="eyebrow">POSITIONING &amp; REGISTRATION</p>
+      <h1>定位配准参数与操作演示</h1>
+      <p class="section-copy">本页集中说明定位配准相关参数，并配合实际操作视频展示设置和使用过程。</p>
+      <div class="registration-layout">
         <article class="media-card">
-          <h2>粒子检测操作演示</h2>
-          <p>点击播放可查看实际操作与检测过程，手机端支持全屏播放。</p>
+          <h2>定位配准参数说明</h2>
+          <p>当前先收录已经确认的定位配准参数，后续可继续补充完整参数清单。</p>
+          <div class="registration-table">
+            <div class="registration-row header" aria-hidden="true">
+              <div>参数名称</div>
+              <div>参数范围</div>
+              <div>具体作用</div>
+            </div>
+            <div class="registration-row data">
+              <div data-label="参数名称"><strong>idx_to_loc</strong></div>
+              <div data-label="参数范围">整数／图像源编号</div>
+              <div data-label="具体作用">选择用于定位配准的图像源或序号，具体编号含义以当前工位配置为准</div>
+            </div>
+          </div>
+          <p class="registration-note">其余定位配准参数将在获得对应参数页面或清单后继续补充。</p>
+        </article>
+        <article class="media-card">
+          <h2>定位配准操作视频</h2>
+          <p>点击播放可查看定位配准的实际操作过程，手机端支持全屏播放。</p>
           <video class="demo-video" controls preload="metadata" playsinline>
             <source src="media/particle-detection-demo.mp4" type="video/mp4">
             当前浏览器不支持视频播放，请使用最新版浏览器打开。
           </video>
           <p class="video-caption">屏幕录制 · MP4 视频</p>
-        </article>
-        <article class="media-card">
-          <h2>GIF 动图</h2>
-          <p>适合展示参数变化、局部缺陷和短步骤操作。</p>
-          <div class="media-placeholder"><div><span aria-hidden="true">GIF</span>等待添加动图文件</div></div>
         </article>
       </div>
     </section>
@@ -591,7 +634,7 @@
     const navLinks = [...document.querySelectorAll(".site-nav [data-view-link]")];
     const viewTitles = {
       home: "粒子检测知识与参数中心（测试版）",
-      media: "新内容 | 粒子检测参数中心"
+      media: "定位配准参数与操作演示 | 粒子检测参数中心"
     };
 
     function activateView() {
