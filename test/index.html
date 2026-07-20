@@ -286,6 +286,17 @@
       box-shadow: none;
     }
 
+    .registration-module-table {
+      margin: 18px 0 28px;
+      box-shadow: none;
+    }
+
+    .registration-module-table td:first-child { width: 32%; }
+    .registration-module-table td:nth-child(2) {
+      color: var(--text);
+      white-space: normal;
+    }
+
     .registration-parameter-table td:first-child code {
       display: block;
       margin-top: 3px;
@@ -607,6 +618,10 @@
       }
       body.print-registration .media-card > p { margin-bottom: 10px; }
       body.print-registration .registration-parameter-table { margin-top: 8px; }
+      body.print-registration .registration-module-table th:first-child,
+      body.print-registration .registration-module-table td:first-child { width: 32%; }
+      body.print-registration .registration-module-table th:nth-child(2),
+      body.print-registration .registration-module-table td:nth-child(2) { width: 68%; }
     }
   </style>
 </head>
@@ -690,6 +705,15 @@
       <p id="registration-copy" class="section-copy">本页集中说明定位配准常用参数，并配合操作视频展示设置过程。</p>
       <div class="registration-layout">
         <article class="media-card">
+          <h2 id="registration-modules-title">定位/配准模块</h2>
+          <p id="registration-modules-intro">定位组通过不同模块分别查找瓶底、液面和瓶体左右边缘，并提供对应的配准基准。</p>
+          <div class="table-shell registration-module-table">
+            <div class="table-meta"><strong id="registration-modules-language">中文</strong> · <span id="registration-modules-count">7 项功能模块</span></div>
+            <table>
+              <thead><tr><th id="registration-module-header-name" scope="col">模块名称</th><th id="registration-module-header-function" scope="col">具体作用</th></tr></thead>
+              <tbody id="registration-module-rows"></tbody>
+            </table>
+          </div>
           <h2 id="registration-table-title">定位配准参数说明</h2>
           <p id="registration-intro">根据离线程序定位配准界面及 XML 字段整理。</p>
           <div class="table-shell registration-parameter-table">

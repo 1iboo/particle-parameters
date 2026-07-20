@@ -2,6 +2,16 @@
   const registrationVersions = {
     zh: {
       name: "中文", headers: ["参数名称", "参数范围", "具体作用"], count: "15 项参数",
+      moduleTitle: "定位/配准模块", moduleIntro: "定位组通过不同模块分别查找瓶底、液面和瓶体左右边缘，并提供对应的配准基准。", moduleHeaders: ["模块名称", "具体作用"], moduleCount: "7 项功能模块",
+      modules: [
+        ["bottom_location", "查找瓶底位置，作为检测区域的定位基准"],
+        ["bottom_register", "利用瓶底特征计算配准补偿"],
+        ["level_location", "查找液面位置，提供液面相关区域的定位基准"],
+        ["side_left_location", "查找瓶体左侧边缘位置"],
+        ["side_left_register", "利用瓶体左侧边缘计算配准补偿"],
+        ["side_right_location", "查找瓶体右侧边缘位置"],
+        ["side_right_register", "利用瓶体右侧边缘计算配准补偿"]
+      ],
       rows: [
         ["开启", "0关闭／1开启", "启用或关闭定位模块"],
         ["扫描/瓶沿", "0关闭／1开启", "启用扫描定位，根据瓶沿特征寻找定位边缘"],
@@ -22,6 +32,16 @@
     },
     en: {
       name: "English", headers: ["Parameter", "Range", "Function"], count: "15 parameters",
+      moduleTitle: "Positioning & Registration Modules", moduleIntro: "The positioning group uses separate modules to locate the bottle bottom, liquid level, and left/right bottle edges and to provide registration references.", moduleHeaders: ["Module", "Function"], moduleCount: "7 functional modules",
+      modules: [
+        ["bottom_location", "Locates the bottle bottom as the positioning reference for detection regions"],
+        ["bottom_register", "Calculates registration compensation from bottle-bottom features"],
+        ["level_location", "Locates the liquid level for liquid-level-related regions"],
+        ["side_left_location", "Locates the left edge of the bottle"],
+        ["side_left_register", "Calculates registration compensation from the left bottle edge"],
+        ["side_right_location", "Locates the right edge of the bottle"],
+        ["side_right_register", "Calculates registration compensation from the right bottle edge"]
+      ],
       rows: [
         ["switch on", "0 = Off / 1 = On", "Enables or disables the positioning module"],
         ["b scan", "0 = Off / 1 = On", "Enables scan positioning and locates an edge from the bottle-rim feature"],
@@ -42,6 +62,16 @@
     },
     fr: {
       name: "Français", headers: ["Paramètre", "Plage", "Fonction"], count: "15 paramètres",
+      moduleTitle: "Modules de positionnement et de recalage", moduleIntro: "Le groupe utilise des modules distincts pour localiser le fond, le niveau du liquide et les bords gauche/droit du flacon, puis fournir les références de recalage.", moduleHeaders: ["Module", "Fonction"], moduleCount: "7 modules fonctionnels",
+      modules: [
+        ["bottom_location", "Localise le fond du flacon comme référence de positionnement des zones de détection"],
+        ["bottom_register", "Calcule la compensation de recalage à partir du fond du flacon"],
+        ["level_location", "Localise le niveau du liquide pour les zones associées"],
+        ["side_left_location", "Localise le bord gauche du flacon"],
+        ["side_left_register", "Calcule la compensation de recalage à partir du bord gauche"],
+        ["side_right_location", "Localise le bord droit du flacon"],
+        ["side_right_register", "Calcule la compensation de recalage à partir du bord droit"]
+      ],
       rows: [
         ["Activation", "0 = désactivé / 1 = activé", "Active ou désactive le module de positionnement"],
         ["Balayage / bord du flacon", "0 = désactivé / 1 = activé", "Active le positionnement par balayage à partir du bord du flacon"],
@@ -62,6 +92,16 @@
     },
     ru: {
       name: "Русский", headers: ["Параметр", "Диапазон", "Назначение"], count: "15 параметров",
+      moduleTitle: "Модули позиционирования и совмещения", moduleIntro: "Отдельные модули находят дно, уровень жидкости и левый/правый край флакона, а также формируют опорные данные для совмещения.", moduleHeaders: ["Модуль", "Назначение"], moduleCount: "7 функциональных модулей",
+      modules: [
+        ["bottom_location", "Находит дно флакона как опорную позицию областей контроля"],
+        ["bottom_register", "Рассчитывает компенсацию совмещения по признакам дна"],
+        ["level_location", "Находит уровень жидкости для связанных областей"],
+        ["side_left_location", "Находит левый край флакона"],
+        ["side_left_register", "Рассчитывает компенсацию совмещения по левому краю"],
+        ["side_right_location", "Находит правый край флакона"],
+        ["side_right_register", "Рассчитывает компенсацию совмещения по правому краю"]
+      ],
       rows: [
         ["Включение", "0 = выкл. / 1 = вкл.", "Включает или отключает модуль позиционирования"],
         ["Сканирование / край флакона", "0 = выкл. / 1 = вкл.", "Включает поиск позиции сканированием по краю флакона"],
@@ -82,6 +122,16 @@
     },
     tr: {
       name: "Türkçe", headers: ["Parametre", "Aralık", "İşlev"], count: "15 parametre",
+      moduleTitle: "Konumlandırma ve Kayıt Modülleri", moduleIntro: "Ayrı modüller şişe tabanını, sıvı seviyesini ve şişenin sol/sağ kenarlarını bulur ve kayıt referanslarını sağlar.", moduleHeaders: ["Modül", "İşlev"], moduleCount: "7 işlev modülü",
+      modules: [
+        ["bottom_location", "Şişe tabanını algılama bölgeleri için konum referansı olarak bulur"],
+        ["bottom_register", "Şişe tabanı özelliklerinden kayıt telafisi hesaplar"],
+        ["level_location", "Sıvı seviyesiyle ilgili bölgeler için sıvı seviyesini bulur"],
+        ["side_left_location", "Şişenin sol kenarını bulur"],
+        ["side_left_register", "Sol şişe kenarından kayıt telafisi hesaplar"],
+        ["side_right_location", "Şişenin sağ kenarını bulur"],
+        ["side_right_register", "Sağ şişe kenarından kayıt telafisi hesaplar"]
+      ],
       rows: [
         ["Etkinleştirme", "0 = Kapalı / 1 = Açık", "Konumlandırma modülünü açar veya kapatır"],
         ["Tarama / şişe kenarı", "0 = Kapalı / 1 = Açık", "Şişe kenarı özelliğine göre taramalı konumlandırmayı etkinleştirir"],
@@ -102,6 +152,16 @@
     },
     es: {
       name: "Español", headers: ["Parámetro", "Rango", "Función"], count: "15 parámetros",
+      moduleTitle: "Módulos de posicionamiento y registro", moduleIntro: "Los módulos localizan por separado el fondo, el nivel del líquido y los bordes izquierdo/derecho del frasco y proporcionan referencias de registro.", moduleHeaders: ["Módulo", "Función"], moduleCount: "7 módulos funcionales",
+      modules: [
+        ["bottom_location", "Localiza el fondo del frasco como referencia de las regiones de detección"],
+        ["bottom_register", "Calcula la compensación de registro a partir del fondo del frasco"],
+        ["level_location", "Localiza el nivel del líquido para las regiones relacionadas"],
+        ["side_left_location", "Localiza el borde izquierdo del frasco"],
+        ["side_left_register", "Calcula la compensación de registro a partir del borde izquierdo"],
+        ["side_right_location", "Localiza el borde derecho del frasco"],
+        ["side_right_register", "Calcula la compensación de registro a partir del borde derecho"]
+      ],
       rows: [
         ["Activación", "0 = Desactivado / 1 = Activado", "Activa o desactiva el módulo de posicionamiento"],
         ["Escaneo / borde del frasco", "0 = Desactivado / 1 = Activado", "Activa el posicionamiento por escaneo según el borde del frasco"],
@@ -131,22 +191,33 @@
     es: { htmlLang: "es", languageLabel: "Idioma", brand: "Centro de parámetros de detección de partículas", navHome: "Inicio", navParameters: "Parámetros de partículas", navMedia: "Posicionamiento y registro", homeDocTitle: "Centro de conocimientos y parámetros", homeTitle: "Centro de conocimientos y parámetros de detección", homeCopy: "Consulte los parámetros comunes de detección de partículas y posicionamiento, junto con el vídeo de operación.", particleButton: "Ver parámetros de partículas", locationButton: "Ver posicionamiento", statParticle: "parámetros de partículas", statLocation: "parámetros de posicionamiento", statLanguage: "idiomas", registrationDocTitle: "Parámetros comunes de posicionamiento y registro", registrationTitle: "Parámetros comunes de posicionamiento y registro", registrationCopy: "Esta página explica los parámetros comunes e incluye un vídeo de operación.", tableTitle: "Parámetros de posicionamiento y registro", intro: "Elaborado a partir de las etiquetas y los campos XML del programa sin conexión.", note: "El valor -1 suele indicar que la función o el límite está desactivado. Guarde el XML original antes de ajustar.", videoTitle: "Vídeo de operación de posicionamiento y registro", videoCopy: "Reproduzca el vídeo para ver el procedimiento. Los móviles admiten pantalla completa.", videoCaption: "Grabación de pantalla · Vídeo MP4", print: "Imprimir / Guardar como PDF" }
   };
 
-  window.renderRegistrationParameters = code => {
-    const version = registrationVersions[code] || registrationVersions.zh;
-    const tbody = document.getElementById("registration-rows");
+  const renderRows = (targetId, rows, headers) => {
+    const tbody = document.getElementById(targetId);
     if (!tbody) return;
     const fragment = document.createDocumentFragment();
-    version.rows.forEach(rowData => {
+    rows.forEach(rowData => {
       const row = document.createElement("tr");
       rowData.forEach((value, index) => {
         const cell = document.createElement("td");
         cell.textContent = value;
-        cell.dataset.label = version.headers[index];
+        cell.dataset.label = headers[index];
         row.appendChild(cell);
       });
       fragment.appendChild(row);
     });
     tbody.replaceChildren(fragment);
+  };
+
+  window.renderRegistrationParameters = code => {
+    const version = registrationVersions[code] || registrationVersions.zh;
+    renderRows("registration-module-rows", version.modules, version.moduleHeaders);
+    renderRows("registration-rows", version.rows, version.headers);
+    document.getElementById("registration-modules-title").textContent = version.moduleTitle;
+    document.getElementById("registration-modules-intro").textContent = version.moduleIntro;
+    document.getElementById("registration-modules-language").textContent = version.name;
+    document.getElementById("registration-modules-count").textContent = version.moduleCount;
+    document.getElementById("registration-module-header-name").textContent = version.moduleHeaders[0];
+    document.getElementById("registration-module-header-function").textContent = version.moduleHeaders[1];
     document.getElementById("registration-current-language").textContent = version.name;
     document.getElementById("registration-count").textContent = version.count;
     ["registration-header-name", "registration-header-range", "registration-header-function"].forEach((id, index) => {
