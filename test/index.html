@@ -80,6 +80,36 @@
       gap: 6px;
     }
 
+    .site-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .site-language-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .site-language-control label {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .site-language-control select {
+      min-width: 126px;
+      padding: 8px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      cursor: pointer;
+    }
+
     .site-nav a {
       padding: 9px 14px;
       border-radius: 8px;
@@ -405,6 +435,18 @@
         grid-template-columns: repeat(3, 1fr);
       }
 
+      .site-actions {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .site-language-control {
+        justify-content: space-between;
+      }
+
+      .site-language-control select { flex: 1; }
+
       .site-nav a {
         padding: 10px 6px;
         text-align: center;
@@ -572,13 +614,26 @@
   <header class="site-header">
     <a class="brand" href="#home" data-view-link="home" aria-label="返回首页">
       <span class="brand-mark" aria-hidden="true">P</span>
-      <span class="brand-name">粒子检测参数中心</span>
+      <span id="brand-name" class="brand-name">粒子检测参数中心</span>
     </a>
-    <nav class="site-nav" aria-label="主导航">
-      <a href="#home" data-view-link="home">首页</a>
-      <a href="#parameters" data-view-link="parameters">参数说明</a>
-      <a href="#media" data-view-link="media">定位配准</a>
-    </nav>
+    <div class="site-actions">
+      <nav class="site-nav" aria-label="主导航">
+        <a id="nav-home" href="#home" data-view-link="home">首页</a>
+        <a id="nav-parameters" href="#parameters" data-view-link="parameters">粒子参数</a>
+        <a id="nav-media" href="#media" data-view-link="media">定位配准</a>
+      </nav>
+      <div class="site-language-control">
+        <label id="language-label" for="language-select">语言</label>
+        <select id="language-select" aria-label="选择语言">
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="ru">Русский</option>
+          <option value="tr">Türkçe</option>
+          <option value="es">Español</option>
+        </select>
+      </div>
+    </div>
   </header>
 
   <main class="site-main">
@@ -586,17 +641,17 @@
       <div class="hero">
         <div>
           <p class="eyebrow">PARTICLE DETECTION · TEST SITE</p>
-          <h1>粒子检测知识与参数中心</h1>
-          <p class="hero-copy">集中查看常用参数说明，并通过独立页面学习定位配准参数和实际操作视频。本页面是测试版，不影响现有正式参数网站。</p>
+          <h1 id="home-title">粒子检测知识与参数中心</h1>
+          <p id="home-copy" class="hero-copy">集中查看粒子检测与定位配准常用参数，并通过操作视频了解设置过程。</p>
           <div class="hero-actions">
-            <a class="primary-button" href="#parameters" data-view-link="parameters">查看参数说明</a>
-            <a class="secondary-button" href="#media" data-view-link="media">查看定位配准</a>
+            <a id="home-particle-button" class="primary-button" href="#parameters" data-view-link="parameters">查看粒子参数</a>
+            <a id="home-location-button" class="secondary-button" href="#media" data-view-link="media">查看定位配准</a>
           </div>
         </div>
         <aside class="hero-panel" aria-label="网站内容概览">
-          <div class="stat-card"><strong>49</strong><span>项常用参数</span></div>
-          <div class="stat-card"><strong>6</strong><span>种语言切换</span></div>
-          <div class="stat-card"><strong>手机</strong><span>自适应显示</span></div>
+          <div class="stat-card"><strong>49</strong><span id="stat-particle">项粒子参数</span></div>
+          <div class="stat-card"><strong>15</strong><span id="stat-location">项定位参数</span></div>
+          <div class="stat-card"><strong>6</strong><span id="stat-language">种语言切换</span></div>
         </aside>
       </div>
     </section>
@@ -605,15 +660,6 @@
       <header class="app-header">
         <h1 id="page-title">粒子检测常用参数说明</h1>
         <div class="language-control">
-          <label id="language-label" for="language-select">语言 / Language</label>
-          <select id="language-select" aria-label="选择语言">
-            <option value="zh">中文</option>
-            <option value="en">English</option>
-            <option value="fr">Français</option>
-            <option value="ru">Русский</option>
-            <option value="tr">Türkçe</option>
-            <option value="es">Español</option>
-          </select>
           <button id="print-button" class="print-button" type="button">打印 / 保存为 PDF</button>
         </div>
       </header>
@@ -638,31 +684,31 @@
     <section id="media" class="view media-view" data-view="media" hidden>
       <p class="eyebrow">POSITIONING &amp; REGISTRATION</p>
       <div class="registration-heading">
-        <h1>定位配准常用参数说明</h1>
+      <h1 id="registration-title">定位配准常用参数说明</h1>
         <button id="registration-print-button" class="print-button" type="button">打印 / 保存为 PDF</button>
       </div>
-      <p class="section-copy">本页集中说明定位配准相关参数，并配合实际操作视频展示设置和使用过程。</p>
+      <p id="registration-copy" class="section-copy">本页集中说明定位配准常用参数，并配合操作视频展示设置过程。</p>
       <div class="registration-layout">
         <article class="media-card">
-          <h2>定位配准参数说明</h2>
-          <p>根据离线程序定位配准界面及 XML 字段整理。部分模式编号属于算法内部选项。</p>
+          <h2 id="registration-table-title">定位配准参数说明</h2>
+          <p id="registration-intro">根据离线程序定位配准界面及 XML 字段整理。</p>
           <div class="table-shell registration-parameter-table">
-            <div class="table-meta"><strong>中文</strong> · <span id="registration-count">15 项参数</span></div>
+            <div class="table-meta"><strong id="registration-current-language">中文</strong> · <span id="registration-count">15 项参数</span></div>
             <table>
-              <thead><tr><th scope="col">参数名称</th><th scope="col">参数范围</th><th scope="col">具体作用</th></tr></thead>
+              <thead><tr><th id="registration-header-name" scope="col">参数名称</th><th id="registration-header-range" scope="col">参数范围</th><th id="registration-header-function" scope="col">具体作用</th></tr></thead>
               <tbody id="registration-rows"></tbody>
             </table>
           </div>
-          <p class="registration-note">参数值为 -1 时通常表示关闭或不启用对应限制；调整前建议先保存原始 XML。</p>
+          <p id="registration-note" class="registration-note">参数值为 -1 时通常表示关闭或不启用对应限制；调整前建议先保存原始 XML。</p>
         </article>
         <article class="media-card video-card">
-          <h2>定位配准操作视频</h2>
-          <p>点击播放可查看定位配准的实际操作过程，手机端支持全屏播放。</p>
+          <h2 id="video-title">定位配准操作视频</h2>
+          <p id="video-copy">点击播放可查看定位配准的实际操作过程，手机端支持全屏播放。</p>
           <video class="demo-video" controls preload="metadata" playsinline>
             <source src="media/particle-detection-demo.mp4" type="video/mp4">
             当前浏览器不支持视频播放，请使用最新版浏览器打开。
           </video>
-          <p class="video-caption">屏幕录制 · MP4 视频</p>
+          <p id="video-caption" class="video-caption">屏幕录制 · MP4 视频</p>
         </article>
       </div>
     </section>
@@ -685,9 +731,27 @@
     const tbody = document.getElementById("parameter-rows");
     const views = [...document.querySelectorAll("[data-view]")];
     const navLinks = [...document.querySelectorAll(".site-nav [data-view-link]")];
-    const viewTitles = {
-      home: "粒子检测知识与参数中心（测试版）",
-      media: "定位配准常用参数说明 | 粒子检测参数中心"
+    const siteElements = {
+      brand: document.getElementById("brand-name"),
+      navHome: document.getElementById("nav-home"),
+      navParameters: document.getElementById("nav-parameters"),
+      navMedia: document.getElementById("nav-media"),
+      homeTitle: document.getElementById("home-title"),
+      homeCopy: document.getElementById("home-copy"),
+      particleButton: document.getElementById("home-particle-button"),
+      locationButton: document.getElementById("home-location-button"),
+      statParticle: document.getElementById("stat-particle"),
+      statLocation: document.getElementById("stat-location"),
+      statLanguage: document.getElementById("stat-language"),
+      registrationTitle: document.getElementById("registration-title"),
+      registrationCopy: document.getElementById("registration-copy"),
+      tableTitle: document.getElementById("registration-table-title"),
+      intro: document.getElementById("registration-intro"),
+      note: document.getElementById("registration-note"),
+      videoTitle: document.getElementById("video-title"),
+      videoCopy: document.getElementById("video-copy"),
+      videoCaption: document.getElementById("video-caption"),
+      registrationPrint: document.getElementById("registration-print-button")
     };
 
     function activateView() {
@@ -698,20 +762,20 @@
         if (link.dataset.viewLink === current) link.setAttribute("aria-current", "page");
         else link.removeAttribute("aria-current");
       });
+      const site = window.siteTranslations[select.value] || window.siteTranslations.zh;
       document.title = current === "parameters"
-        ? `${versions[select.value].title} | 测试站`
-        : viewTitles[current];
+        ? `${versions[select.value].title} | ${site.brand}`
+        : current === "media" ? site.registrationDocTitle : site.homeDocTitle;
       window.scrollTo({ top: 0, behavior: "auto" });
     }
 
     function renderLanguage(code) {
       const version = versions[code] || versions.zh;
-      document.documentElement.lang = version.htmlLang;
-      if ((location.hash.slice(1) || "home") === "parameters") {
-        document.title = `${version.title} | 测试站`;
-      }
+      const site = window.siteTranslations[code] || window.siteTranslations.zh;
+      document.documentElement.lang = site.htmlLang || version.htmlLang;
+      select.setAttribute("aria-label", site.languageLabel);
       pageTitle.textContent = version.title;
-      languageLabel.textContent = version.label;
+      languageLabel.textContent = site.languageLabel;
       currentLanguage.textContent = version.name;
       parameterCount.textContent = version.count;
       printButton.textContent = version.print;
@@ -729,7 +793,13 @@
         fragment.appendChild(tr);
       });
       tbody.replaceChildren(fragment);
+      Object.entries(siteElements).forEach(([key, element]) => {
+        if (element && site[key]) element.textContent = site[key];
+      });
+      if (siteElements.registrationPrint) siteElements.registrationPrint.textContent = site.print;
+      window.renderRegistrationParameters(code);
       localStorage.setItem("particle-parameter-language", code);
+      activateView();
     }
 
     select.addEventListener("change", event => renderLanguage(event.target.value));
@@ -739,7 +809,6 @@
     const savedLanguage = localStorage.getItem("particle-parameter-language");
     if (savedLanguage && versions[savedLanguage]) { select.value = savedLanguage; }
     renderLanguage(select.value);
-    activateView();
   </script>
 </body>
 </html>
