@@ -175,6 +175,8 @@
   ];
 
   const roleSelect = document.getElementById("prototype-role-select");
+  const languageSelect = document.getElementById("language-select");
+  const languageControl = document.querySelector(".site-language-control");
   const currentRoleName = document.getElementById("current-role-name");
   const requestForm = document.getElementById("release-request-form");
   const accountForm = document.getElementById("account-form");
@@ -182,9 +184,15 @@
   const buildTaskList = document.getElementById("build-task-list");
   const accountList = document.getElementById("account-list");
 
+  let customerLanguage = "zh";
   const t = key => (translations[language] && translations[language][key]) || translations.en[key] || translations.zh[key] || key;
   const roleLabel = role => t(`role${role.charAt(0).toUpperCase()}${role.slice(1)}`);
-  const canUseRole = minimum => ROLE_LEVEL[currentRole] >= ROLE_LEVEL[minimum];
+  const canUseRole = minimum => {
+    if (!Object.hasOwn(ROLE_LEVEL, minimum)) return false;
+    if (currentRole === "admin") return minimum === "admin";
+    if (minimum === "admin") return false;
+    return ROLE_LEVEL[currentRole] >= ROLE_LEVEL[minimum];
+  };
 
   const statusKey = status => ({
     pending: "statusPending",
@@ -342,7 +350,20 @@
 
   const setRole = role => {
     if (!(role in ROLE_LEVEL)) role = "customer";
+    const previousRole = currentRole;
+    if (role !== "customer" && previousRole === "customer" && languageSelect) {
+      customerLanguage = languageSelect.value || "zh";
+    }
     currentRole = role;
+    const customerMode = role === "customer";
+    if (languageControl) languageControl.hidden = !customerMode;
+    if (languageSelect) {
+      const requiredLanguage = customerMode ? customerLanguage : "zh";
+      if (languageSelect.value !== requiredLanguage) {
+        languageSelect.value = requiredLanguage;
+        languageSelect.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    }
     if (roleSelect) roleSelect.value = role;
     if (currentRoleName) currentRoleName.textContent = roleLabel(role);
     document.querySelectorAll("[data-min-role]").forEach(element => {
@@ -356,7 +377,9 @@
   };
 
   const renderLanguage = code => {
-    language = translations[code] ? code : "en";
+    language = currentRole === "customer" && translations[code] ? code : "zh";
+    if (currentRole === "customer") customerLanguage = language;
+    if (languageSelect && languageSelect.value !== language) languageSelect.value = language;
     document.querySelectorAll("[data-workflow-i18n]").forEach(element => {
       const value = t(element.dataset.workflowI18n);
       if (value) element.textContent = value;
@@ -385,6 +408,12 @@
   });
 
   if (roleSelect) roleSelect.addEventListener("change", event => setRole(event.target.value));
+  if (languageSelect) {
+    languageSelect.addEventListener("change", event => {
+      if (currentRole === "customer") customerLanguage = event.target.value;
+      else if (event.target.value !== "zh") event.target.value = "zh";
+    });
+  }
 
   if (requestForm) {
     requestForm.addEventListener("submit", event => {
