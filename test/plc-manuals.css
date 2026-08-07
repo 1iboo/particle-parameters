@@ -1,0 +1,283 @@
+.plc-view {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 64px) clamp(18px, 4vw, 42px) 72px;
+}
+
+.workflow-card-link,
+.plc-back-link {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  color: var(--teal);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.workflow-card-link { margin-top: 14px; }
+.workflow-card-link::after { margin-left: 7px; content: "→"; }
+.workflow-card-link:hover,
+.plc-back-link:hover { text-decoration: underline; }
+
+.plc-entry-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+
+.plc-entry-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+  padding: clamp(24px, 4vw, 38px);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: linear-gradient(135deg, #fff 0%, #eef7fa 100%);
+  box-shadow: 0 18px 48px rgba(20, 55, 86, 0.08);
+}
+
+.plc-entry-code {
+  display: grid;
+  place-items: center;
+  width: 78px;
+  height: 78px;
+  border-radius: 20px;
+  background: var(--navy);
+  color: #fff;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+}
+
+.plc-entry-card h2,
+.plc-guide-card h2,
+.diagnostic-priority h2,
+.manual-search-card h2,
+.manual-library h2 {
+  margin: 0;
+  color: var(--navy);
+}
+
+.plc-entry-card p { margin: 8px 0 0; color: var(--muted); line-height: 1.7; }
+
+.plc-guide-card,
+.diagnostic-priority,
+.manual-search-card,
+.manual-library {
+  margin-top: 24px;
+  padding: clamp(22px, 4vw, 34px);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 14px 40px rgba(20, 55, 86, 0.07);
+}
+
+.plc-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.plc-guide-grid > div {
+  padding: 20px;
+  border-radius: 16px;
+  background: var(--alternate);
+}
+
+.plc-guide-grid strong { color: var(--teal); font-size: 13px; letter-spacing: 0.08em; }
+.plc-guide-grid h3 { margin: 10px 0 6px; color: var(--navy); }
+.plc-guide-grid p { margin: 0; color: var(--muted); line-height: 1.65; }
+
+.plc-back-link { margin-bottom: 18px; }
+.plc-back-link::before { margin-right: 7px; content: "←"; }
+
+.plc-version-warning {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding: 17px 20px;
+  border: 1px solid #ead8aa;
+  border-radius: 14px;
+  background: #fff8e7;
+  color: #6f510b;
+  line-height: 1.6;
+}
+
+.plc-version-warning strong { white-space: nowrap; }
+
+.diagnostic-priority {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: 26px;
+}
+
+.diagnostic-priority p:not(.workflow-kicker) { color: var(--muted); line-height: 1.7; }
+
+.diagnostic-class-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+
+.diagnostic-class {
+  min-height: 112px;
+  padding: 16px;
+  border-radius: 16px;
+  color: #fff;
+}
+
+.diagnostic-class strong { display: block; font-size: 32px; line-height: 1; }
+.diagnostic-class span { display: block; margin-top: 17px; font-size: 13px; font-weight: 700; line-height: 1.35; }
+.diagnostic-class.class-f { background: #a93342; }
+.diagnostic-class.class-e { background: #b86c0b; }
+.diagnostic-class.class-c { background: #2b6f9f; }
+.diagnostic-class.class-a { background: #297259; }
+
+.manual-search-heading,
+.manual-library-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.manual-search-heading p,
+.manual-library-heading p { margin: 8px 0 0; color: var(--muted); }
+
+.manual-count {
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: var(--alternate);
+  color: var(--teal);
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.manual-search-controls {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.5fr) minmax(190px, 0.8fr) minmax(150px, 0.6fr) auto;
+  align-items: end;
+  gap: 12px;
+}
+
+.manual-search-field { display: grid; gap: 7px; color: var(--navy); font-size: 13px; font-weight: 800; }
+.manual-search-field input,
+.manual-search-field select {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+}
+
+.manual-search-field input:focus,
+.manual-search-field select:focus { outline: 3px solid rgba(35, 135, 151, 0.16); border-color: var(--teal); }
+.manual-reset-button { min-height: 44px; padding: 10px 18px; }
+
+.diagnostic-examples { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.diagnostic-examples button {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #f7fafb;
+  color: var(--navy);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.diagnostic-examples button:hover { border-color: var(--teal); color: var(--teal); }
+.diagnostic-summary { margin: 18px 0 10px; color: var(--muted); font-size: 14px; }
+
+.diagnostic-results { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.diagnostic-result {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) minmax(175px, 0.55fr) 62px auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.diagnostic-result:last-child { border-bottom: 0; }
+.diagnostic-result:nth-child(even) { background: #f8fbfc; }
+
+.diagnostic-code {
+  width: fit-content;
+  padding: 6px 9px;
+  border-radius: 8px;
+  background: var(--navy);
+  color: #fff;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.diagnostic-title { color: var(--navy); font-weight: 750; line-height: 1.45; }
+.diagnostic-version { color: var(--muted); font-size: 13px; line-height: 1.45; }
+.diagnostic-page { color: var(--muted); font-size: 13px; }
+.diagnostic-open-link {
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: var(--teal);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.diagnostic-open-link:hover { background: #176f7c; }
+.diagnostic-empty { padding: 32px 18px; color: var(--muted); text-align: center; }
+
+.manual-card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.manual-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 260px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: linear-gradient(155deg, #fff, #f1f7f9);
+}
+.manual-card-tag { width: fit-content; padding: 5px 8px; border-radius: 7px; background: var(--navy); color: #fff; font-size: 11px; font-weight: 900; letter-spacing: 0.06em; }
+.manual-card h3 { margin: 16px 0 8px; color: var(--navy); font-size: 20px; line-height: 1.35; }
+.manual-card-meta { display: grid; gap: 6px; margin: 8px 0 22px; color: var(--muted); font-size: 14px; }
+.manual-card-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; }
+.manual-card-actions a { padding: 9px 12px; border-radius: 9px; font-weight: 800; text-decoration: none; }
+.manual-card-actions a:first-child { background: var(--teal); color: #fff; }
+.manual-card-actions a:last-child { border: 1px solid var(--border); background: #fff; color: var(--navy); }
+.manual-source-note { margin: 22px 4px 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
+
+@media (max-width: 1000px) {
+  .plc-entry-card { grid-template-columns: auto minmax(0, 1fr); }
+  .plc-entry-card .primary-button { grid-column: 1 / -1; width: fit-content; }
+  .diagnostic-priority { grid-template-columns: 1fr; }
+  .manual-search-controls { grid-template-columns: 1fr 1fr; }
+  .manual-search-query { grid-column: 1 / -1; }
+  .diagnostic-result { grid-template-columns: 82px minmax(0, 1fr) 150px 54px; }
+  .diagnostic-open-link { grid-column: 2 / -1; width: fit-content; }
+}
+
+@media (max-width: 760px) {
+  .plc-guide-grid,
+  .manual-card-grid { grid-template-columns: 1fr; }
+  .diagnostic-class-grid { grid-template-columns: 1fr 1fr; }
+  .manual-search-controls { grid-template-columns: 1fr; }
+  .manual-search-query { grid-column: auto; }
+  .manual-reset-button { width: 100%; }
+  .plc-version-warning,
+  .manual-search-heading,
+  .manual-library-heading { align-items: flex-start; flex-direction: column; }
+  .diagnostic-result {
+    grid-template-columns: 1fr;
+    gap: 7px;
+    padding: 16px;
+  }
+  .diagnostic-open-link { grid-column: auto; }
+}
+
+@media (max-width: 520px) {
+  .plc-entry-card { grid-template-columns: 1fr; }
+  .plc-entry-code { width: 62px; height: 62px; border-radius: 16px; font-size: 19px; }
+  .diagnostic-class-grid { grid-template-columns: 1fr; }
+}
