@@ -283,18 +283,6 @@
       background: var(--alternate);
     }
 
-    .registration-heading {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .registration-heading .print-button {
-      flex: 0 0 auto;
-      border-color: var(--border);
-    }
-
     .registration-parameter-table {
       margin-top: 18px;
       box-shadow: none;
@@ -332,38 +320,6 @@
     .app-header h1 {
       margin: 0;
       font-size: clamp(22px, 3vw, 36px);
-      font-weight: 600;
-    }
-
-    .language-control {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex: 0 0 auto;
-    }
-
-    .language-control label {
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .language-control select,
-    .print-button {
-      padding: 10px 12px;
-      border: 1px solid rgba(255, 255, 255, 0.58);
-      border-radius: 8px;
-      background: #fff;
-      color: var(--text);
-      font: inherit;
-    }
-
-    .language-control select {
-      min-width: 170px;
-      cursor: pointer;
-    }
-
-    .print-button {
-      cursor: pointer;
       font-weight: 600;
     }
 
@@ -468,11 +424,6 @@
       }
 
       .hero-panel { padding: 16px; }
-      .registration-heading {
-        align-items: stretch;
-        flex-direction: column;
-      }
-      .registration-heading .print-button { width: 100%; }
       .registration-row { grid-template-columns: 1fr; }
       .registration-row.header { display: none; }
       .registration-row > div { border-right: 0; border-bottom: 1px solid var(--border); }
@@ -489,14 +440,6 @@
         align-items: stretch;
         flex-direction: column;
       }
-
-      .language-control {
-        align-items: stretch;
-        flex-direction: column;
-      }
-
-      .language-control select,
-      .print-button { width: 100%; }
 
       .table-shell {
         border: 0;
@@ -550,77 +493,6 @@
       }
     }
 
-    @media print {
-      @page { size: A4 landscape; margin: 8mm; }
-      body { background: #fff; }
-      .site-header,
-      #home,
-      #media { display: none !important; }
-      #parameters { display: block !important; }
-      .app-header { padding: 0 0 14px; background: #fff; color: #000; }
-      .language-control { display: none; }
-      .parameter-main { padding: 0; }
-      .table-shell { max-width: none; border-radius: 0; box-shadow: none; }
-      .table-meta { padding: 8px 10px; }
-      table { display: table; width: 100%; table-layout: fixed; }
-      thead { display: table-header-group; }
-      tbody { display: table-row-group; padding: 0; }
-      tr,
-      tbody tr,
-      tbody tr:nth-child(even) {
-        display: table-row;
-        width: auto;
-        border: 0;
-        border-radius: 0;
-        background: transparent;
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
-      th,
-      td,
-      td:first-child,
-      td:nth-child(2) {
-        display: table-cell;
-        width: auto;
-        min-width: 0;
-        padding: 4px 6px;
-        border-right: 1px solid var(--border);
-        border-bottom: 1px solid var(--border);
-        font-size: 8pt;
-        white-space: normal;
-      }
-      th:nth-child(1), td:nth-child(1) { width: 22%; }
-      th:nth-child(2), td:nth-child(2) { width: 14%; }
-      th:nth-child(3), td:nth-child(3) { width: 64%; }
-      td::before { display: none; content: none; }
-
-      body.print-registration #parameters { display: none !important; }
-      body.print-registration #media {
-        display: block !important;
-        max-width: none;
-        padding: 0;
-      }
-      body.print-registration #media > .eyebrow,
-      body.print-registration #media > .section-copy,
-      body.print-registration #registration-print-button { display: none !important; }
-      body.print-registration #media h1 {
-        margin-bottom: 12px;
-        color: #000;
-        font-size: 22pt;
-      }
-      body.print-registration .registration-layout { margin-top: 0; }
-      body.print-registration .media-card {
-        padding: 0;
-        border: 0;
-        box-shadow: none;
-      }
-      body.print-registration .media-card > p { margin-bottom: 10px; }
-      body.print-registration .registration-parameter-table { margin-top: 8px; }
-      body.print-registration .registration-module-table th:first-child,
-      body.print-registration .registration-module-table td:first-child { width: 32%; }
-      body.print-registration .registration-module-table th:nth-child(2),
-      body.print-registration .registration-module-table td:nth-child(2) { width: 68%; }
-    }
   </style>
 </head>
 <body>
@@ -673,9 +545,6 @@
     <section id="parameters" class="view" data-view="parameters" hidden>
       <header class="app-header">
         <h1 id="page-title">粒子检测常用参数说明</h1>
-        <div class="language-control">
-          <button id="print-button" class="print-button" type="button">打印 / 保存为 PDF</button>
-        </div>
       </header>
 
       <div class="parameter-main">
@@ -696,11 +565,8 @@
     </section>
 
     <section id="media" class="view media-view" data-view="media" hidden>
-      <p class="eyebrow">POSITIONING &amp; REGISTRATION</p>
-      <div class="registration-heading">
+      <p class="eyebrow">LOCATION &amp; REGISTRATION</p>
       <h1 id="registration-title">定位配准常用参数说明</h1>
-        <button id="registration-print-button" class="print-button" type="button">打印 / 保存为 PDF</button>
-      </div>
       <p id="registration-copy" class="section-copy">本页集中说明定位配准常用参数。</p>
       <div class="registration-layout">
         <article class="media-card">
@@ -797,7 +663,6 @@
     const languageLabel = document.getElementById("language-label");
     const currentLanguage = document.getElementById("current-language");
     const parameterCount = document.getElementById("parameter-count");
-    const printButton = document.getElementById("print-button");
     const headers = [
       document.getElementById("header-name"),
       document.getElementById("header-range"),
@@ -822,8 +687,7 @@
       registrationCopy: document.getElementById("registration-copy"),
       tableTitle: document.getElementById("registration-table-title"),
       intro: document.getElementById("registration-intro"),
-      note: document.getElementById("registration-note"),
-      registrationPrint: document.getElementById("registration-print-button")
+      note: document.getElementById("registration-note")
     };
 
     function activateView() {
@@ -850,7 +714,6 @@
       languageLabel.textContent = site.languageLabel;
       currentLanguage.textContent = version.name;
       parameterCount.textContent = version.count;
-      printButton.textContent = version.print;
       version.headers.forEach((text, index) => { headers[index].textContent = text; });
 
       const fragment = document.createDocumentFragment();
@@ -868,14 +731,12 @@
       Object.entries(siteElements).forEach(([key, element]) => {
         if (element && site[key]) element.textContent = site[key];
       });
-      if (siteElements.registrationPrint) siteElements.registrationPrint.textContent = site.print;
       window.renderRegistrationParameters(code);
       localStorage.setItem("particle-parameter-language", code);
       activateView();
     }
 
     select.addEventListener("change", event => renderLanguage(event.target.value));
-    printButton.addEventListener("click", () => requestAnimationFrame(() => window.print()));
     window.addEventListener("hashchange", activateView);
 
     const savedLanguage = localStorage.getItem("particle-parameter-language");

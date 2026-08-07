@@ -32,9 +32,9 @@
     },
     en: {
       name: "English", headers: ["Parameter", "Range", "Function"], count: "15 parameters",
-      moduleTitle: "Positioning & Registration Modules", moduleIntro: "The positioning group uses separate modules to locate the bottle bottom, liquid level, and left/right bottle edges and to provide registration references.", moduleHeaders: ["Module", "Function"], moduleCount: "7 functional modules",
+      moduleTitle: "Location & Registration Modules", moduleIntro: "The location group uses separate modules to locate the bottle bottom, liquid level, and left/right bottle edges and to provide registration references.", moduleHeaders: ["Module", "Function"], moduleCount: "7 functional modules",
       modules: [
-        ["bottom_location", "Locates the bottle bottom as the positioning reference for detection regions"],
+        ["bottom_location", "Locates the bottle bottom as the location reference for detection regions"],
         ["bottom_register", "Calculates registration compensation from bottle-bottom features"],
         ["level_location", "Locates the liquid level for liquid-level-related regions"],
         ["side_left_location", "Locates the left edge of the bottle"],
@@ -43,8 +43,8 @@
         ["side_right_register", "Calculates registration compensation from the right bottle edge"]
       ],
       rows: [
-        ["switch on", "0 = Off / 1 = On", "Enables or disables the positioning module"],
-        ["b scan", "0 = Off / 1 = On", "Enables scan positioning and locates an edge from the bottle-rim feature"],
+        ["switch on", "0 = Off / 1 = On", "Enables or disables the location module"],
+        ["b scan", "0 = Off / 1 = On", "Enables scan-based location and finds an edge from the bottle-rim feature"],
         ["sbOrbX", "0 or 1", "Selects the scan axis; 1 mainly scans along X and 0 mainly along Y"],
         ["sbInc", "0 or 1", "Selects increasing or decreasing coordinates as the scan direction"],
         ["diff thr", "Signed integer", "Gray-difference threshold for an edge; a larger absolute value requires stronger contrast"],
@@ -53,10 +53,10 @@
         ["sszmax.width / sszmax.height", "Positive integer (pixels)", "Limits the maximum width and height of an edge candidate"],
         ["len min", "Positive integer (pixels)", "Minimum continuous edge length; increasing it filters short interference"],
         ["anchor", "Integer (pixels)", "Offsets the final position after the edge is found"],
-        ["Set region", "x, y, width, height", "Sets the search region for the positioning module"],
+        ["Set region", "x, y, width, height", "Sets the search region for the location module"],
         ["rthr ratio", "Decimal 0–1", "Valid-result ratio threshold; a larger value makes validation stricter"],
-        ["rthr x", "Integer (pixels), -1 = Off", "Limits the maximum allowed positioning variation along X"],
-        ["rthr y", "Integer (pixels), -1 = Off", "Limits the maximum allowed positioning variation along Y"],
+        ["rthr x", "Integer (pixels), -1 = Off", "Limits the maximum allowed location variation along X"],
+        ["rthr y", "Integer (pixels), -1 = Off", "Limits the maximum allowed location variation along Y"],
         ["r of tlx / r of tly / r of brx / r of bry", "Integer (pixels)", "Offsets the four boundaries of the registration region"]
       ]
     },
@@ -214,7 +214,7 @@
 
   window.siteTranslations = {
     zh: { htmlLang: "zh-CN", languageLabel: "语言", brand: "粒子检测参数中心", navHome: "首页", navParameters: "粒子参数", navMedia: "定位配准", homeDocTitle: "粒子检测知识与参数中心", homeTitle: "粒子检测知识与参数中心", homeCopy: "集中查看粒子检测与定位配准常用参数，便于查询和调试。", particleButton: "查看粒子参数", locationButton: "查看定位配准", statParticle: "项粒子参数", statLocation: "项定位参数", statLanguage: "种语言切换", registrationDocTitle: "定位配准常用参数说明", registrationTitle: "定位配准常用参数说明", registrationCopy: "本页集中说明定位配准常用参数。", tableTitle: "定位配准参数说明", intro: "根据离线程序定位配准界面及 XML 字段整理。", note: "参数值为 -1 时通常表示关闭或不启用对应限制；调整前建议先保存原始 XML。", print: "打印 / 保存为 PDF" },
-    en: { htmlLang: "en", languageLabel: "Language", brand: "Particle Detection Parameter Center", navHome: "Home", navParameters: "Particle Parameters", navMedia: "Positioning & Registration", homeDocTitle: "Particle Detection Knowledge & Parameter Center", homeTitle: "Particle Detection Knowledge & Parameter Center", homeCopy: "View common particle-detection and positioning/registration parameters for quick reference and tuning.", particleButton: "View particle parameters", locationButton: "View positioning & registration", statParticle: "particle parameters", statLocation: "positioning parameters", statLanguage: "languages", registrationDocTitle: "Common Positioning & Registration Parameters", registrationTitle: "Common Positioning & Registration Parameters", registrationCopy: "This page explains common positioning and registration parameters.", tableTitle: "Positioning & Registration Parameters", intro: "Organized from the interface labels and XML fields in the offline program.", note: "A value of -1 usually means Off or that the corresponding limit is disabled. Save the original XML before tuning.", print: "Print / Save as PDF" },
+    en: { htmlLang: "en", languageLabel: "Language", brand: "Particle Detection Parameter Center", navHome: "Home", navParameters: "Particle Parameters", navMedia: "Location & Registration", homeDocTitle: "Particle Detection Knowledge & Parameter Center", homeTitle: "Particle Detection Knowledge & Parameter Center", homeCopy: "View common particle-detection and location/registration parameters for quick reference and tuning.", particleButton: "View particle parameters", locationButton: "View location & registration", statParticle: "particle parameters", statLocation: "location parameters", statLanguage: "languages", registrationDocTitle: "Common Location & Registration Parameters", registrationTitle: "Common Location & Registration Parameters", registrationCopy: "This page explains common location and registration parameters.", tableTitle: "Location & Registration Parameters", intro: "Organized from the interface labels and XML fields in the offline program.", note: "A value of -1 usually means Off or that the corresponding limit is disabled. Save the original XML before tuning.", print: "Print / Save as PDF" },
     fr: { htmlLang: "fr", languageLabel: "Langue", brand: "Centre des paramètres de détection de particules", navHome: "Accueil", navParameters: "Paramètres particules", navMedia: "Positionnement et recalage", homeDocTitle: "Centre de connaissances et de paramètres", homeTitle: "Centre de connaissances et de paramètres de détection", homeCopy: "Consultez les paramètres courants de détection de particules et de positionnement pour faciliter la consultation et le réglage.", particleButton: "Voir les paramètres particules", locationButton: "Voir le positionnement", statParticle: "paramètres particules", statLocation: "paramètres de positionnement", statLanguage: "langues", registrationDocTitle: "Paramètres courants de positionnement et de recalage", registrationTitle: "Paramètres courants de positionnement et de recalage", registrationCopy: "Cette page explique les paramètres courants de positionnement et de recalage.", tableTitle: "Paramètres de positionnement et de recalage", intro: "Établi à partir de l’interface et des champs XML du programme hors ligne.", note: "La valeur -1 signifie généralement que la fonction ou la limite est désactivée. Enregistrez le XML d’origine avant tout réglage.", print: "Imprimer / Enregistrer en PDF" },
     ru: { htmlLang: "ru", languageLabel: "Язык", brand: "Центр параметров контроля частиц", navHome: "Главная", navParameters: "Параметры частиц", navMedia: "Позиционирование", homeDocTitle: "Центр знаний и параметров контроля частиц", homeTitle: "Центр знаний и параметров контроля частиц", homeCopy: "Просматривайте основные параметры контроля частиц и позиционирования для удобства настройки и справки.", particleButton: "Параметры частиц", locationButton: "Параметры позиционирования", statParticle: "параметров частиц", statLocation: "параметров позиционирования", statLanguage: "языков", registrationDocTitle: "Основные параметры позиционирования и совмещения", registrationTitle: "Основные параметры позиционирования и совмещения", registrationCopy: "На странице приведены основные параметры позиционирования и совмещения.", tableTitle: "Параметры позиционирования и совмещения", intro: "Составлено по интерфейсу и XML-полям автономной программы.", note: "Значение -1 обычно означает отключение функции или ограничения. Перед настройкой сохраните исходный XML.", print: "Печать / Сохранить в PDF" },
     tr: { htmlLang: "tr", languageLabel: "Dil", brand: "Parçacık Algılama Parametre Merkezi", navHome: "Ana sayfa", navParameters: "Parçacık parametreleri", navMedia: "Konumlandırma ve kayıt", homeDocTitle: "Parçacık Algılama Bilgi ve Parametre Merkezi", homeTitle: "Parçacık Algılama Bilgi ve Parametre Merkezi", homeCopy: "Yaygın parçacık algılama ve konumlandırma parametrelerini hızlı başvuru ve ayarlama için inceleyin.", particleButton: "Parçacık parametrelerini görüntüle", locationButton: "Konumlandırmayı görüntüle", statParticle: "parçacık parametresi", statLocation: "konumlandırma parametresi", statLanguage: "dil", registrationDocTitle: "Yaygın Konumlandırma ve Kayıt Parametreleri", registrationTitle: "Yaygın Konumlandırma ve Kayıt Parametreleri", registrationCopy: "Bu sayfada yaygın konumlandırma ve kayıt parametreleri açıklanmaktadır.", tableTitle: "Konumlandırma ve Kayıt Parametreleri", intro: "Çevrimdışı programın arayüz etiketleri ve XML alanlarından düzenlenmiştir.", note: "-1 değeri genellikle ilgili işlevin veya sınırın kapalı olduğunu belirtir. Ayarlamadan önce özgün XML dosyasını kaydedin.", print: "Yazdır / PDF olarak kaydet" },
@@ -256,12 +256,4 @@
     });
   };
 
-  const printButton = document.getElementById("registration-print-button");
-  if (printButton) {
-    printButton.addEventListener("click", () => {
-      document.body.classList.add("print-registration");
-      requestAnimationFrame(() => window.print());
-    });
-    window.addEventListener("afterprint", () => document.body.classList.remove("print-registration"));
-  }
 })();
