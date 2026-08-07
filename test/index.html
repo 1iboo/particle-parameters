@@ -494,6 +494,7 @@
     }
 
   </style>
+  <link rel="stylesheet" href="workflow-prototype.css">
 </head>
 <body>
   <header class="site-header">
@@ -506,6 +507,10 @@
         <a id="nav-home" href="#home" data-view-link="home">首页</a>
         <a id="nav-parameters" href="#parameters" data-view-link="parameters">粒子参数</a>
         <a id="nav-media" href="#media" data-view-link="media">定位配准</a>
+        <a id="nav-support" href="#support" data-view-link="support" data-workflow-i18n="navSupport">问题排查</a>
+        <a id="nav-request" href="#request" data-view-link="request" data-min-role="debugger" data-workflow-i18n="navRequest" hidden>生成申请</a>
+        <a id="nav-build" href="#build" data-view-link="build" data-min-role="developer" data-workflow-i18n="navBuild" hidden>编译任务</a>
+        <a id="nav-admin" href="#admin" data-view-link="admin" data-min-role="admin" data-workflow-i18n="navAdmin" hidden>账户权限</a>
       </nav>
       <div class="site-language-control">
         <label id="language-label" for="language-select">语言</label>
@@ -519,8 +524,23 @@
           <option value="es">Español</option>
         </select>
       </div>
+      <div class="prototype-role-control">
+        <label for="prototype-role-select" data-workflow-i18n="rolePreview">权限预览</label>
+        <select id="prototype-role-select" aria-label="权限预览">
+          <option value="customer" data-workflow-i18n="roleCustomer">客户</option>
+          <option value="debugger" data-workflow-i18n="roleDebugger">同事（调试）</option>
+          <option value="developer" data-workflow-i18n="roleDeveloper">同事（开发）</option>
+          <option value="admin" data-workflow-i18n="roleAdmin">管理员</option>
+        </select>
+      </div>
     </div>
   </header>
+
+  <div id="prototype-banner" class="prototype-banner">
+    <strong data-workflow-i18n="phaseOne">第一阶段演示</strong>
+    <span data-workflow-i18n="prototypeNotice">当前仅演示页面和权限流程，尚未接入真实账号、数据库和编译机。</span>
+    <span><span data-workflow-i18n="currentRole">当前权限</span>：<b id="current-role-name">客户</b></span>
+  </div>
 
   <main class="site-main">
     <section id="home" class="view home-view" data-view="home">
@@ -545,6 +565,7 @@
     <section id="parameters" class="view" data-view="parameters" hidden>
       <header class="app-header">
         <h1 id="page-title">粒子检测常用参数说明</h1>
+        <button id="print-button" class="workflow-print-button" type="button" data-min-role="debugger" hidden>打印 / 保存为 PDF</button>
       </header>
 
       <div class="parameter-main">
@@ -566,7 +587,10 @@
 
     <section id="media" class="view media-view" data-view="media" hidden>
       <p class="eyebrow">LOCATION &amp; REGISTRATION</p>
-      <h1 id="registration-title">定位配准常用参数说明</h1>
+      <div class="registration-heading">
+        <h1 id="registration-title">定位配准常用参数说明</h1>
+        <button id="registration-print-button" class="workflow-print-button" type="button" data-min-role="debugger" hidden>打印 / 保存为 PDF</button>
+      </div>
       <p id="registration-copy" class="section-copy">本页集中说明定位配准常用参数。</p>
       <div class="registration-layout">
         <article class="media-card">
@@ -592,9 +616,185 @@
         </article>
       </div>
     </section>
+
+    <section id="support" class="view workflow-view" data-view="support" hidden>
+      <div class="workflow-heading">
+        <div>
+          <p class="workflow-kicker">SOFTWARE SUPPORT</p>
+          <h1 data-workflow-i18n="supportTitle">软件问题排查</h1>
+          <p class="workflow-lead" data-workflow-i18n="supportLead">客户及所有同事都可以查看的公开问题分类，后续可逐步补充详细处理步骤。</p>
+        </div>
+        <span class="phase-chip" data-workflow-i18n="publicContent">公开内容</span>
+      </div>
+      <div class="workflow-grid">
+        <article class="workflow-card">
+          <span class="workflow-card-index">01</span>
+          <h2 data-workflow-i18n="supportPermissionTitle">权限确认失败</h2>
+          <p data-workflow-i18n="supportPermissionCopy">核对设备编号和相机SN，由调试同事提交离线软件生成申请。</p>
+        </article>
+        <article class="workflow-card">
+          <span class="workflow-card-index">02</span>
+          <h2 data-workflow-i18n="supportStartupTitle">离线软件无法启动</h2>
+          <p data-workflow-i18n="supportStartupCopy">检查Release目录是否完整、x64依赖文件是否齐全，并记录错误提示。</p>
+        </article>
+        <article class="workflow-card">
+          <span class="workflow-card-index">03</span>
+          <h2 data-workflow-i18n="supportCameraTitle">相机或图像异常</h2>
+          <p data-workflow-i18n="supportCameraCopy">记录相机连接状态、SN、图像表现和发生时间，便于后续定位。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="request" class="view workflow-view" data-view="request" data-min-role="debugger" hidden>
+      <div class="workflow-heading">
+        <div>
+          <p class="workflow-kicker">OFFLINE SOFTWARE REQUEST</p>
+          <h1 data-workflow-i18n="requestTitle">离线软件生成申请</h1>
+          <p class="workflow-lead" data-workflow-i18n="requestLead">调试同事提交设备编号和相机SN，开发同事确认后重新编译ImgProcOffline.exe。</p>
+        </div>
+        <span class="role-chip" data-workflow-i18n="debuggerAccess">调试及以上权限</span>
+      </div>
+      <p class="workflow-note" data-workflow-i18n="demoDataNotice">第一阶段使用临时演示数据，刷新页面后会恢复初始状态，不会真正提交编译任务。</p>
+      <div class="workflow-split">
+        <section class="workflow-panel">
+          <div class="workflow-panel-header"><h2 data-workflow-i18n="newRequest">新建申请</h2></div>
+          <form id="release-request-form" class="workflow-form">
+            <div class="workflow-form-grid">
+              <div class="workflow-field">
+                <label for="request-device" data-workflow-i18n="deviceNumber">设备编号</label>
+                <input id="request-device" name="device" required maxlength="40" autocomplete="off" placeholder="IVS-001">
+              </div>
+              <div class="workflow-field">
+                <label for="request-sn" data-workflow-i18n="cameraSn">相机SN</label>
+                <input id="request-sn" name="cameraSn" required maxlength="80" autocomplete="off" placeholder="SN12345678">
+              </div>
+              <div class="workflow-field">
+                <label for="request-release" data-workflow-i18n="baseRelease">基础Release版本</label>
+                <input id="request-release" name="release" required value="Release-20260715" maxlength="80">
+              </div>
+              <div class="workflow-field">
+                <label for="request-priority" data-workflow-i18n="priority">紧急程度</label>
+                <select id="request-priority" name="priority">
+                  <option value="normal" data-workflow-i18n="priorityNormal">普通</option>
+                  <option value="urgent" data-workflow-i18n="priorityUrgent">紧急</option>
+                </select>
+              </div>
+              <div class="workflow-field full">
+                <label for="request-description" data-workflow-i18n="problemDescription">问题说明</label>
+                <textarea id="request-description" name="description" maxlength="500" placeholder="设备提示权限确认失败"></textarea>
+              </div>
+            </div>
+            <button class="workflow-button" type="submit" data-workflow-i18n="submitRequest">提交生成申请</button>
+          </form>
+        </section>
+        <section class="workflow-panel">
+          <div class="workflow-panel-header">
+            <h2 data-workflow-i18n="myRequests">申请记录</h2>
+            <span id="request-count" class="phase-chip">1</span>
+          </div>
+          <div class="workflow-table-shell">
+            <table class="workflow-table">
+              <thead><tr>
+                <th data-workflow-i18n="requestId">申请编号</th>
+                <th data-workflow-i18n="deviceNumber">设备编号</th>
+                <th data-workflow-i18n="cameraSn">相机SN</th>
+                <th data-workflow-i18n="baseRelease">基础Release版本</th>
+                <th data-workflow-i18n="status">状态</th>
+                <th data-workflow-i18n="result">结果</th>
+              </tr></thead>
+              <tbody id="request-list"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="build" class="view workflow-view" data-view="build" data-min-role="developer" hidden>
+      <div class="workflow-heading">
+        <div>
+          <p class="workflow-kicker">BUILD TASK CENTER</p>
+          <h1 data-workflow-i18n="buildTitle">编译任务中心</h1>
+          <p class="workflow-lead" data-workflow-i18n="buildLead">开发同事核对SN并推进编译状态；第一阶段只演示流程，不会运行真实编译命令。</p>
+        </div>
+        <span class="role-chip" data-workflow-i18n="developerAccess">开发及以上权限</span>
+      </div>
+      <div class="workflow-summary">
+        <div class="workflow-summary-card"><strong id="summary-pending">0</strong><span data-workflow-i18n="statusPending">待开发处理</span></div>
+        <div class="workflow-summary-card"><strong id="summary-building">0</strong><span data-workflow-i18n="statusBuilding">编译中</span></div>
+        <div class="workflow-summary-card"><strong id="summary-success">0</strong><span data-workflow-i18n="statusSuccess">编译成功</span></div>
+        <div class="workflow-summary-card"><strong id="summary-failed">0</strong><span data-workflow-i18n="statusFailed">编译失败</span></div>
+      </div>
+      <section class="workflow-panel">
+        <div class="workflow-panel-header"><h2 data-workflow-i18n="allBuildTasks">全部编译申请</h2></div>
+        <div class="workflow-table-shell">
+          <table class="workflow-table">
+            <thead><tr>
+              <th data-workflow-i18n="requestId">申请编号</th>
+              <th data-workflow-i18n="deviceAndSn">设备 / SN</th>
+              <th data-workflow-i18n="requester">申请人</th>
+              <th data-workflow-i18n="baseRelease">基础Release版本</th>
+              <th data-workflow-i18n="status">状态</th>
+              <th data-workflow-i18n="actions">操作</th>
+            </tr></thead>
+            <tbody id="build-task-list"></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <section id="admin" class="view workflow-view" data-view="admin" data-min-role="admin" hidden>
+      <div class="workflow-heading">
+        <div>
+          <p class="workflow-kicker">ACCOUNT &amp; PERMISSIONS</p>
+          <h1 data-workflow-i18n="adminTitle">账户与权限</h1>
+          <p class="workflow-lead" data-workflow-i18n="adminLead">管理员新增、停用账号并调整角色；第一阶段仅演示界面和权限变化。</p>
+        </div>
+        <span class="role-chip" data-workflow-i18n="adminAccess">仅管理员</span>
+      </div>
+      <div class="workflow-split">
+        <section class="workflow-panel">
+          <div class="workflow-panel-header"><h2 data-workflow-i18n="newAccount">新增账户</h2></div>
+          <form id="account-form" class="workflow-form">
+            <div class="workflow-field">
+              <label for="account-name" data-workflow-i18n="accountName">姓名</label>
+              <input id="account-name" name="name" required maxlength="40" autocomplete="off">
+            </div>
+            <div class="workflow-field">
+              <label for="account-email" data-workflow-i18n="accountEmail">登录邮箱</label>
+              <input id="account-email" name="email" type="email" required maxlength="120" autocomplete="off">
+            </div>
+            <div class="workflow-field">
+              <label for="account-role" data-workflow-i18n="accountRole">角色</label>
+              <select id="account-role" name="role">
+                <option value="debugger" data-workflow-i18n="roleDebugger">同事（调试）</option>
+                <option value="developer" data-workflow-i18n="roleDeveloper">同事（开发）</option>
+                <option value="admin" data-workflow-i18n="roleAdmin">管理员</option>
+              </select>
+            </div>
+            <button class="workflow-button" type="submit" data-workflow-i18n="addAccount">新增账户</button>
+          </form>
+        </section>
+        <section class="workflow-panel">
+          <div class="workflow-panel-header"><h2 data-workflow-i18n="accountList">账户列表</h2></div>
+          <div class="workflow-table-shell">
+            <table class="workflow-table">
+              <thead><tr>
+                <th data-workflow-i18n="accountName">姓名</th>
+                <th data-workflow-i18n="accountEmail">登录邮箱</th>
+                <th data-workflow-i18n="accountRole">角色</th>
+                <th data-workflow-i18n="accountState">状态</th>
+                <th data-workflow-i18n="actions">操作</th>
+              </tr></thead>
+              <tbody id="account-list"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </section>
   </main>
 
   <script src="registration-parameters.js"></script>
+  <script src="workflow-prototype.js"></script>
   <script>
     const versions = {"zh":{"htmlLang":"zh-CN","name":"中文","title":"粒子检测常用参数说明","label":"语言 / Language","headers":["参数名称","参数范围","具体作用"],"count":"49 项参数","print":"打印 / 保存为 PDF","rows":[["噪声范围x","3–9整数","横向噪声匹配窗口。值越大，允许匹配的空间范围越大，屏蔽更强，但可能屏蔽慢速缺陷"],["噪声范围y","3–9整数","纵向噪声匹配窗口。值越大，允许匹配的空间范围越大，屏蔽更强，但可能屏蔽慢速缺陷"],["噪声抑制","0–2小数","值越大，屏蔽能力越强"],["噪点亮度","正整数","固定位置异常点的亮度变化门槛。值越大，只有更明显的亮度变化才参与噪点判断"],["噪点频度","正整数","固定位置异常需要出现的帧数。值越大，越不容易被认定为固定噪点，屏蔽能力变弱，真实缺陷检出概率提高"],["噪点过滤","小数","对满足亮度和频度条件的固定噪点施加过滤强度；值越大，屏蔽能力越强"],["cnt_shift","正整数","异物移动特别缓慢、常规检测不易检出时使用"],["区域|绿线","整数（像素）","将检测区域划分为上区和下区，配合后续参数在两个区域使用不同检测精度"],["上区差值","正整数","依据背景与粒子的明暗差别；值越小，上区域检测能力越强"],["上区点数x","正整数","依据粒子的像素点大小；值越小，上区域横向检测能力越强"],["上区点数y","正整数","依据粒子的像素点大小；值越小，上区域纵向检测能力越强"],["下区差值","正整数","依据背景与粒子的明暗差别；值越小，下区域检测能力越强"],["下区点数x","正整数","依据粒子的像素点大小；值越小，下区域横向检测能力越强"],["下区点数y","正整数","依据粒子的像素点大小；值越小，下区域纵向检测能力越强"],["屏蔽框/反光掩膜编号","正整数","根据左右位置添加动态屏蔽框，x、y 以瓶底左右为基准"],["屏蔽区前景亮度减值","-1关闭","用于检测屏蔽框内移动异物；值越大，检测能力越弱"],["屏蔽区前景范围收缩X","正整数","限制屏蔽框内异物的横向移动范围；值越大，检测能力越弱"],["屏蔽区前景范围收缩Y","正整数","限制屏蔽框内异物的纵向移动范围；值越大，检测能力越弱"],["背景过滤使能","0关闭／1开启","在检出液面附近粒子的同时屏蔽液面误检，但对液面稳定程度要求较高"],["背景白线-参考起始","正整数","白线到瓶底的距离"],["背景紫线-参考结束","正整数","紫线到白线的距离；白线与紫线之间用于建立参考背景"],["背景黄线-屏蔽线","正整数","检测区域上边界到黄线的距离；该区域执行背景屏蔽"],["背景阈值1\u00262","整数","目标灰度与参考背景灰度的差值绝对值超过阈值时，进入屏蔽考虑范围"],["skerB_x / skerB_y","正整数","影响背景屏蔽实际范围。值越大屏蔽越多；过小可能屏蔽液面不全，过大可能使液面失去检测能力"],["shrk_tlx","正整数","检测区域上边界向下收缩，缩小液面到瓶底的空间"],["shrk_brx","正整数","检测区域下边界向上收缩，缩小瓶底到液面的空间"],["shrk_tly","正整数","检测区域右边界向左收缩，缩小瓶子右侧到左侧的空间"],["shrk_bry","正整数","检测区域左边界向右收缩，缩小瓶子左侧到右侧的空间"],["sx_len_min","正整数","上下方向最小检测区域限定"],["sy_len_min","正整数","左右方向最小检测区域限定"],["seq_begin","正整数","以采集图片数为基准，从前往后第 x 张序列开始检测"],["seq_rbegin","正整数","以采集图片数为基准，从后往前第 x 张序列开始排除检测"],["enforce","正整数","序列成像较暗时，可增强亮度进行检测"],["fg_neg1_pos2","1–3整数","1 检测浅色移动轨迹；2 检测深色移动轨迹；3 深色、浅色移动轨迹都检测"],["二次过滤使能","0关闭／1开启","用于屏蔽药液内气泡等干扰，对检出框进行面积、紧凑度、周长、长边和点数判定"],["过滤面积上下限","正整数","检出框内像素面积低于下限或高于上限时过滤"],["过滤紧凑度上下限","小数","以紧凑度为判定标准：检测点状缺陷时范围收窄；检测条状缺陷时范围放宽"],["过滤周长上下限","正整数","以周长为判定标准：点状缺陷面积小、周长也小；条状缺陷面积不一定大，但周长可能很长"],["过滤显示使能","0关闭／1开启","使被过滤的干扰呈现蓝色"],["过滤框长边","正整数","对条状缺陷影响较大；值越大，过滤能力越强"],["过滤框点数","正整数","检出框内像素点数量门槛；值越大，过滤能力越强"],["hl_bin","正整数","液面区域进入轮廓分析的候选像素值。调大可减少液面误检，但弱缺陷更易漏检；调小更灵敏，但噪声增加"],["hl_contour_smooth","不小于3的奇数","对液面轮廓做平滑处理。值越大平滑越强，但可能使正常弯曲或转角产生较大的轮廓偏差"],["hl_contour_dist","正整数","液面轮廓点相对于平滑轮廓的距离门槛。调大只保留突出变形，误检减少但弱缺陷易漏；调小门槛降低，误检增加"],["hl_level_frms","正整数","多帧确认门槛。有效检出帧数达到该值才满足判定；值越大越严格，误检减少但漏检增加"],["hl_level_single_frm","正整数","单帧检出框的非零点数量门槛。一帧内检出点数达到该值才满足判定；值越大越严格"],["mask_one_by_one","0关闭／1开启","控制多个 mask 是否逐个处理；开启后分别处理各 mask 区域，配合 DL 检测模块使用"],["mask_dilate_width","正整数","mask 区域膨胀核的总宽度；值越大，横向覆盖范围越大"],["mask_dilate_height","正整数","mask 区域膨胀核的总高度；值越大，纵向覆盖范围越大"]]},"en":{"htmlLang":"en","name":"English","title":"Common Particle Detection Parameters","label":"Language","headers":["Parameter","Range","Function"],"count":"49 parameters","print":"Print / Save as PDF","rows":[["noise Spatio X","Integer 3–9","Horizontal noise-matching window; larger values allow matching over a wider area and provide stronger masking, but may also mask slowly moving defects"],["noise Spatio Y","Integer 3–9","Vertical noise-matching window; larger values allow matching over a wider area and provide stronger masking, but may also mask slowly moving defects"],["noise suppression","Decimal 0–2","Larger values provide stronger masking"],["hn_val","Positive integer","Brightness-change threshold for anomalies at fixed positions; larger values include only more pronounced changes in noise-point evaluation"],["hn_cnt","Positive integer","Required frame count for a fixed-position anomaly; larger values make fixed-noise classification harder, weaken masking, and improve real-defect detection"],["hn_enb","Decimal","Filtering strength applied to fixed noise points that meet the brightness and frequency conditions; larger values provide stronger masking"],["cnt_shift","Positive integer","Used when very slowly moving foreign particles are difficult to detect with normal settings"],["Region Border Green","Integer (pixels)","Divides the detection area into upper and lower zones so that different detection sensitivities can be applied"],["upper region thres","Positive integer","Brightness-difference threshold between the background and particle; smaller values increase upper-zone sensitivity"],["ker_ag_cnt_up_width","Positive integer","Based on particle size in pixels; smaller values increase horizontal sensitivity in the upper zone"],["ker_ag_cnt_up_height","Positive integer","Based on particle size in pixels; smaller values increase vertical sensitivity in the upper zone"],["underlying region thres","Positive integer","Brightness-difference threshold between the background and particle; smaller values increase lower-zone sensitivity"],["ker_ag_cnt_dwn_width","Positive integer","Based on particle size in pixels; smaller values increase horizontal sensitivity in the lower zone"],["ker_ag_cnt_dwn_height","Positive integer","Based on particle size in pixels; smaller values increase vertical sensitivity in the lower zone"],["mask Left / mask Right parameters","Positive integer","Width, height, X, and Y parameters for dynamic left/right masking boxes, referenced to the bottle-bottom sides"],["Foreground brightness reduction in masked area","-1 = Off","Used to detect moving foreign particles inside the masking box; larger values reduce detection sensitivity"],["Masked foreground range shrink X","Positive integer","Restricts the horizontal motion range inside the masking box; larger values reduce detection sensitivity"],["Masked foreground range shrink Y","Positive integer","Restricts the vertical motion range inside the masking box; larger values reduce detection sensitivity"],["background filter enable","0 = Off / 1 = On","Suppresses false detections near the liquid surface while retaining nearby particles, but requires a stable liquid surface"],["BG ref start white","Positive integer","Distance from the white line to the bottle bottom"],["BG ref end purple","Positive integer","Distance from the purple line to the white line; the area between them is used to build the reference background"],["BG mask yellow","Positive integer","Distance from the top of the detection area to the yellow line; this area is background-masked"],["BG threshold 1 / BG threshold 2","Integer","A region is considered for masking when the absolute gray-value difference from the reference background exceeds the threshold"],["skerB_x / skerB_y","Positive integer","Controls the actual background-masking range; too small may leave the liquid surface incompletely masked, while too large may disable surface detection"],["shrk_tlx","Positive integer","Moves the top boundary downward, reducing the space between the liquid surface and bottle bottom"],["shrk_brx","Positive integer","Moves the bottom boundary upward, reducing the space between the bottle bottom and liquid surface"],["shrk_tly","Positive integer","Moves the right boundary leftward, reducing the detection width from right to left"],["shrk_bry","Positive integer","Moves the left boundary rightward, reducing the detection width from left to right"],["sx_len_min","Positive integer","Minimum detection-area limit in the vertical direction"],["sy_len_min","Positive integer","Minimum detection-area limit in the horizontal direction"],["seq_begin","Positive integer","Starts detection at frame X when counting forward through the acquired image sequence"],["seq_rbegin","Positive integer","Excludes detection from frame X when counting backward through the acquired image sequence"],["enforce","Positive integer","Enhances brightness for detection when the image sequence is too dark"],["fg_neg1_pos2","Integer 1–3","1 detects light tracks; 2 detects dark tracks; 3 detects both light and dark tracks"],["Secondary filtering enable","0 = Off / 1 = On","Suppresses bubbles and similar liquid interference by evaluating area, compactness, perimeter, long side, and point count"],["Filter area limits","Positive integer","Filters a detection box when its pixel area is below the lower limit or above the upper limit"],["Filter compactness limits","Decimal","Uses compactness as the criterion; narrow the range for point defects and widen it for elongated defects"],["Filter perimeter limits","Positive integer","Uses perimeter as the criterion; point defects usually have a small area and perimeter, while elongated defects may have a long perimeter"],["Filter display enable","0 = Off / 1 = On","Displays filtered interference in blue"],["Filter-box long side","Positive integer","Strongly affects elongated defects; larger values increase filtering strength"],["Filter-box point count","Positive integer","Pixel-count threshold inside the detection box; larger values increase filtering strength"],["hl_bin","Positive integer","Candidate pixel value for liquid-surface contour analysis; increasing it reduces false detections but may miss weak defects, while decreasing it raises noise"],["hl_contour_smooth","Odd integer ≥ 3","Smooths the liquid-surface contour; larger values increase smoothing but may create larger deviations at normal curves or corners"],["hl_contour_dist","Positive integer","Distance threshold from the liquid-surface contour to the smoothed contour; larger values keep only pronounced deformation, reducing false alarms but missing weak defects"],["hl_level_frms","Positive integer","Multi-frame confirmation threshold; more valid detection frames are required as the value increases, reducing false alarms but increasing misses"],["hl_level_single_frm","Positive integer","Nonzero-point threshold in a single-frame detection box; the box passes when its point count reaches the value, so larger values are stricter"],["mask_one_by_one","0 = Off / 1 = On","Controls whether multiple masks are processed individually; when enabled, each mask area is processed separately with the DL detection module"],["mask_dilate_width","Positive integer","Total width of the mask dilation kernel; larger values increase horizontal coverage"],["mask_dilate_height","Positive integer","Total height of the mask dilation kernel; larger values increase vertical coverage"]]},"fr":{"htmlLang":"fr","name":"Français","title":"Paramètres courants de détection de particules","label":"Langue","headers":["Paramètre","Plage","Fonction"],"count":"49 paramètres","print":"Imprimer / Enregistrer en PDF","rows":[["Plage de bruit X","Entier de 3 à 9","Fenêtre horizontale d’appariement du bruit ; une valeur élevée élargit la zone d’appariement et renforce le masquage, mais peut masquer les défauts lents"],["Plage de bruit Y","Entier de 3 à 9","Fenêtre verticale d’appariement du bruit ; une valeur élevée élargit la zone d’appariement et renforce le masquage, mais peut masquer les défauts lents"],["Suppression du bruit","Décimal de 0 à 2","Une valeur élevée renforce le masquage"],["Luminosité des points parasites","Entier positif","Seuil de variation lumineuse des anomalies fixes ; une valeur élevée ne retient que les variations plus marquées pour l’analyse"],["Fréquence des points parasites","Entier positif","Nombre d’images requis pour une anomalie fixe ; une valeur élevée rend son classement comme bruit fixe plus difficile et favorise la détection des défauts réels"],["Filtrage des points parasites","Décimal","Intensité du filtrage appliqué aux points fixes satisfaisant les critères de luminosité et de fréquence ; une valeur élevée renforce le masquage"],["cnt_shift","Entier positif","À utiliser lorsque des particules étrangères très lentes sont difficiles à détecter avec les réglages normaux"],["Limite verte des zones","Entier (pixels)","Divise la zone de détection en partie supérieure et inférieure afin d’appliquer des sensibilités différentes"],["Seuil de la zone supérieure","Entier positif","Fondé sur l’écart de luminosité entre le fond et la particule ; une valeur faible augmente la sensibilité de la zone supérieure"],["Nombre de points X zone supérieure","Entier positif","Fondé sur la taille de la particule en pixels ; une valeur faible augmente la sensibilité horizontale de la zone supérieure"],["Nombre de points Y zone supérieure","Entier positif","Fondé sur la taille de la particule en pixels ; une valeur faible augmente la sensibilité verticale de la zone supérieure"],["Seuil de la zone inférieure","Entier positif","Fondé sur l’écart de luminosité entre le fond et la particule ; une valeur faible augmente la sensibilité de la zone inférieure"],["Nombre de points X zone inférieure","Entier positif","Fondé sur la taille de la particule en pixels ; une valeur faible augmente la sensibilité horizontale de la zone inférieure"],["Nombre de points Y zone inférieure","Entier positif","Fondé sur la taille de la particule en pixels ; une valeur faible augmente la sensibilité verticale de la zone inférieure"],["Paramètres des cadres de masquage gauche/droit","Entier positif","Définit la largeur, la hauteur, X et Y des cadres de masquage dynamiques gauche/droit, référencés aux côtés du fond du flacon"],["Réduction de luminosité du premier plan masqué","-1 = désactivé","Sert à détecter les particules mobiles dans le cadre de masquage ; une valeur élevée réduit la sensibilité"],["Réduction de plage du premier plan masqué X","Entier positif","Limite le déplacement horizontal dans le cadre de masquage ; une valeur élevée réduit la sensibilité"],["Réduction de plage du premier plan masqué Y","Entier positif","Limite le déplacement vertical dans le cadre de masquage ; une valeur élevée réduit la sensibilité"],["Activation du filtrage de fond","0 = désactivé / 1 = activé","Réduit les fausses détections près de la surface du liquide tout en conservant les particules proches, mais exige une surface stable"],["Ligne blanche du fond – début de référence","Entier positif","Distance entre la ligne blanche et le fond du flacon"],["Ligne violette du fond – fin de référence","Entier positif","Distance entre la ligne violette et la ligne blanche ; la zone comprise entre elles sert à établir le fond de référence"],["Ligne jaune du fond – ligne de masquage","Entier positif","Distance entre le bord supérieur de la zone de détection et la ligne jaune ; cette zone est masquée par le fond"],["Seuils de fond 1 et 2","Entier","Une zone est envisagée pour le masquage lorsque l’écart absolu de niveau de gris avec le fond de référence dépasse le seuil"],["skerB_x / skerB_y","Entier positif","Règle la portée réelle du masquage de fond ; trop faible, la surface peut être mal masquée ; trop élevée, sa détection peut être supprimée"],["shrk_tlx","Entier positif","Déplace la limite supérieure vers le bas et réduit l’espace entre la surface du liquide et le fond du flacon"],["shrk_brx","Entier positif","Déplace la limite inférieure vers le haut et réduit l’espace entre le fond du flacon et la surface du liquide"],["shrk_tly","Entier positif","Déplace la limite droite vers la gauche et réduit la largeur de détection de droite à gauche"],["shrk_bry","Entier positif","Déplace la limite gauche vers la droite et réduit la largeur de détection de gauche à droite"],["sx_len_min","Entier positif","Limite minimale de la zone de détection dans le sens vertical"],["sy_len_min","Entier positif","Limite minimale de la zone de détection dans le sens horizontal"],["seq_begin","Entier positif","Démarre la détection à l’image X en comptant depuis le début de la séquence acquise"],["seq_rbegin","Entier positif","Exclut la détection à partir de l’image X en comptant depuis la fin de la séquence acquise"],["enforce","Entier positif","Renforce la luminosité pour la détection lorsque la séquence est trop sombre"],["fg_neg1_pos2","Entier de 1 à 3","1 détecte les traces claires ; 2 détecte les traces sombres ; 3 détecte les traces claires et sombres"],["Activation du filtrage secondaire","0 = désactivé / 1 = activé","Élimine les bulles et perturbations similaires en évaluant aire, compacité, périmètre, grand côté et nombre de points"],["Limites d’aire du filtre","Entier positif","Filtre un cadre détecté lorsque son aire en pixels est inférieure à la limite basse ou supérieure à la limite haute"],["Limites de compacité du filtre","Décimal","Utilise la compacité comme critère ; resserrer la plage pour les défauts ponctuels et l’élargir pour les défauts allongés"],["Limites de périmètre du filtre","Entier positif","Utilise le périmètre comme critère ; les défauts ponctuels ont généralement une petite aire et un petit périmètre, les défauts allongés un périmètre long"],["Affichage du filtrage","0 = désactivé / 1 = activé","Affiche en bleu les perturbations filtrées"],["Grand côté du cadre filtré","Entier positif","Influe fortement sur les défauts allongés ; une valeur élevée renforce le filtrage"],["Nombre de points du cadre filtré","Entier positif","Seuil du nombre de pixels dans le cadre détecté ; une valeur élevée renforce le filtrage"],["hl_bin","Entier positif","Valeur candidate pour l’analyse du contour de surface ; l’augmenter réduit les fausses détections mais peut manquer les défauts faibles, la réduire augmente le bruit"],["hl_contour_smooth","Entier impair ≥ 3","Lisse le contour de la surface du liquide ; une valeur élevée accentue le lissage mais peut créer des écarts aux courbes ou angles normaux"],["hl_contour_dist","Entier positif","Seuil de distance entre le contour de surface et le contour lissé ; une valeur élevée ne conserve que les déformations marquées, avec moins de faux positifs mais plus de défauts faibles manqués"],["hl_level_frms","Entier positif","Seuil de confirmation multi-image ; une valeur élevée exige davantage d’images valides, réduit les faux positifs mais augmente les défauts manqués"],["hl_level_single_frm","Entier positif","Seuil de points non nuls dans un cadre sur une image ; le cadre est validé quand le nombre atteint cette valeur, donc une valeur élevée est plus stricte"],["mask_one_by_one","0 = désactivé / 1 = activé","Détermine si plusieurs masques sont traités séparément ; si activé, chaque zone de masque est traitée avec le module de détection DL"],["mask_dilate_width","Entier positif","Largeur totale du noyau de dilatation du masque ; une valeur élevée augmente la couverture horizontale"],["mask_dilate_height","Entier positif","Hauteur totale du noyau de dilatation du masque ; une valeur élevée augmente la couverture verticale"]]},"ru":{"htmlLang":"ru","name":"Русский","title":"Основные параметры обнаружения частиц","label":"Язык","headers":["Параметр","Диапазон","Назначение"],"count":"49 параметров","print":"Печать / Сохранить как PDF","rows":[["Диапазон шума X","Целое число 3–9","Горизонтальное окно сопоставления шума; большее значение расширяет область сопоставления и усиливает маскирование, но может скрыть медленно движущиеся дефекты"],["Диапазон шума Y","Целое число 3–9","Вертикальное окно сопоставления шума; большее значение расширяет область сопоставления и усиливает маскирование, но может скрыть медленно движущиеся дефекты"],["Подавление шума","Десятичное число 0–2","Чем больше значение, тем сильнее маскирование"],["Яркость шумовых точек","Положительное целое","Порог изменения яркости аномалии в фиксированной позиции; при большем значении учитываются только более выраженные изменения"],["Частота шумовых точек","Положительное целое","Требуемое число кадров с аномалией в фиксированной позиции; большее значение затрудняет признание ее постоянным шумом и повышает вероятность обнаружения реального дефекта"],["Фильтрация шумовых точек","Десятичное число","Интенсивность фильтрации фиксированных точек, отвечающих условиям яркости и частоты; большее значение усиливает маскирование"],["cnt_shift","Положительное целое","Используется, когда очень медленно движущиеся посторонние частицы трудно обнаружить обычными настройками"],["Зелёная граница зон","Целое число (пиксели)","Делит область контроля на верхнюю и нижнюю зоны, позволяя задать для них разную чувствительность"],["Порог верхней зоны","Положительное целое","Учитывает разность яркости фона и частицы; меньшее значение повышает чувствительность верхней зоны"],["Число точек X верхней зоны","Положительное целое","Учитывает размер частицы в пикселях; меньшее значение повышает горизонтальную чувствительность верхней зоны"],["Число точек Y верхней зоны","Положительное целое","Учитывает размер частицы в пикселях; меньшее значение повышает вертикальную чувствительность верхней зоны"],["Порог нижней зоны","Положительное целое","Учитывает разность яркости фона и частицы; меньшее значение повышает чувствительность нижней зоны"],["Число точек X нижней зоны","Положительное целое","Учитывает размер частицы в пикселях; меньшее значение повышает горизонтальную чувствительность нижней зоны"],["Число точек Y нижней зоны","Положительное целое","Учитывает размер частицы в пикселях; меньшее значение повышает вертикальную чувствительность нижней зоны"],["Параметры левой/правой рамки маскирования","Положительное целое","Задаёт ширину, высоту, X и Y динамических левой и правой рамок маскирования относительно сторон дна флакона"],["Уменьшение яркости переднего плана в маске","-1 = выкл.","Применяется для обнаружения движущихся частиц внутри рамки маскирования; большее значение снижает чувствительность"],["Сжатие диапазона переднего плана X","Положительное целое","Ограничивает горизонтальное перемещение внутри рамки маскирования; большее значение снижает чувствительность"],["Сжатие диапазона переднего плана Y","Положительное целое","Ограничивает вертикальное перемещение внутри рамки маскирования; большее значение снижает чувствительность"],["Включение фильтрации фона","0 = выкл. / 1 = вкл.","Подавляет ложные срабатывания у поверхности жидкости, сохраняя обнаружение близких частиц, но требует стабильной поверхности"],["Белая линия фона — начало эталона","Положительное целое","Расстояние от белой линии до дна флакона"],["Фиолетовая линия фона — конец эталона","Положительное целое","Расстояние от фиолетовой линии до белой; область между ними используется для построения эталонного фона"],["Желтая линия фона — линия маскирования","Положительное целое","Расстояние от верхней границы области контроля до желтой линии; эта область маскируется по фону"],["Пороги фона 1 и 2","Целое число","Область рассматривается для маскирования, если модуль разности яркости с эталонным фоном превышает порог"],["skerB_x / skerB_y","Положительное целое","Задает фактическую область маскирования фона; слишком малое значение может не полностью скрыть поверхность, слишком большое — отключить ее контроль"],["shrk_tlx","Положительное целое","Сдвигает верхнюю границу вниз, уменьшая пространство между поверхностью жидкости и дном флакона"],["shrk_brx","Положительное целое","Сдвигает нижнюю границу вверх, уменьшая пространство между дном флакона и поверхностью жидкости"],["shrk_tly","Положительное целое","Сдвигает правую границу влево, уменьшая ширину области контроля справа налево"],["shrk_bry","Положительное целое","Сдвигает левую границу вправо, уменьшая ширину области контроля слева направо"],["sx_len_min","Положительное целое","Минимальный размер области контроля по вертикали"],["sy_len_min","Положительное целое","Минимальный размер области контроля по горизонтали"],["seq_begin","Положительное целое","Начинает контроль с кадра X при отсчете от начала полученной последовательности"],["seq_rbegin","Положительное целое","Исключает контроль начиная с кадра X при отсчете от конца полученной последовательности"],["enforce","Положительное целое","Повышает яркость для контроля, если последовательность изображений слишком темная"],["fg_neg1_pos2","Целое число 1–3","1 обнаруживает светлые следы; 2 — темные следы; 3 — светлые и темные следы"],["Включение вторичной фильтрации","0 = выкл. / 1 = вкл.","Подавляет пузырьки и подобные помехи в жидкости по площади, компактности, периметру, длинной стороне и числу точек"],["Пределы площади фильтра","Положительное целое","Отфильтровывает рамку, если ее площадь в пикселях ниже нижнего или выше верхнего предела"],["Пределы компактности фильтра","Десятичное число","Использует компактность как критерий; диапазон сужают для точечных дефектов и расширяют для вытянутых"],["Пределы периметра фильтра","Положительное целое","Использует периметр как критерий; у точечных дефектов обычно малы площадь и периметр, а у вытянутых периметр может быть большим"],["Отображение фильтрации","0 = выкл. / 1 = вкл.","Показывает отфильтрованные помехи синим цветом"],["Длинная сторона рамки фильтра","Положительное целое","Сильно влияет на вытянутые дефекты; большее значение усиливает фильтрацию"],["Число точек в рамке фильтра","Положительное целое","Порог числа пикселей внутри рамки обнаружения; большее значение усиливает фильтрацию"],["hl_bin","Положительное целое","Значение пикселя-кандидата для анализа контура поверхности; увеличение снижает ложные срабатывания, но может пропустить слабые дефекты, уменьшение повышает шум"],["hl_contour_smooth","Нечетное целое ≥ 3","Сглаживает контур поверхности жидкости; большее значение усиливает сглаживание, но может создать отклонения на нормальных изгибах и углах"],["hl_contour_dist","Положительное целое","Порог расстояния от контура поверхности до сглаженного контура; большее значение оставляет только выраженные деформации, снижая ложные срабатывания, но пропуская слабые дефекты"],["hl_level_frms","Положительное целое","Порог многокадрового подтверждения; большее значение требует больше кадров с обнаружением, снижает ложные срабатывания, но увеличивает пропуски"],["hl_level_single_frm","Положительное целое","Порог ненулевых точек в рамке одного кадра; рамка проходит проверку при достижении этого числа, поэтому большее значение строже"],["mask_one_by_one","0 = выкл. / 1 = вкл.","Определяет, обрабатываются ли несколько масок отдельно; при включении каждая область маски обрабатывается модулем DL отдельно"],["mask_dilate_width","Положительное целое","Полная ширина ядра расширения маски; большее значение увеличивает охват по горизонтали"],["mask_dilate_height","Положительное целое","Полная высота ядра расширения маски; большее значение увеличивает охват по вертикали"]]},"tr":{"htmlLang":"tr","name":"Türkçe","title":"Yaygın Parçacık Algılama Parametreleri","label":"Dil","headers":["Parametre","Aralık","İşlev"],"count":"49 parametre","print":"Yazdır / PDF olarak kaydet","rows":[["Gürültü aralığı X","3–9 arası tam sayı","Yatay gürültü eşleştirme penceresi; değer büyüdükçe eşleştirme alanı ve maskeleme artar, ancak yavaş hareket eden kusurlar da maskelenebilir"],["Gürültü aralığı Y","3–9 arası tam sayı","Dikey gürültü eşleştirme penceresi; değer büyüdükçe eşleştirme alanı ve maskeleme artar, ancak yavaş hareket eden kusurlar da maskelenebilir"],["Gürültü bastırma","0–2 arası ondalık","Değer büyüdükçe maskeleme gücü artar"],["Gürültü noktası parlaklığı","Pozitif tam sayı","Sabit konumdaki anormalliğin parlaklık değişim eşiği; değer büyüdükçe yalnızca daha belirgin değişimler değerlendirmeye alınır"],["Gürültü noktası sıklığı","Pozitif tam sayı","Sabit konumdaki anormalliğin görülmesi gereken kare sayısı; değer büyüdükçe sabit gürültü sayılması zorlaşır ve gerçek kusur algılama olasılığı artar"],["Gürültü noktası filtreleme","Ondalık sayı","Parlaklık ve sıklık koşullarını karşılayan sabit gürültü noktalarına uygulanan filtre gücü; değer büyüdükçe maskeleme artar"],["cnt_shift","Pozitif tam sayı","Çok yavaş hareket eden yabancı parçacıklar normal ayarlarla algılanamadığında kullanılır"],["Yeşil bölge sınırı","Tam sayı (piksel)","Algılama alanını üst ve alt bölgeye ayırarak iki bölgede farklı hassasiyetlerin kullanılmasını sağlar"],["Üst bölge eşiği","Pozitif tam sayı","Arka plan ile parçacık arasındaki parlaklık farkına dayanır; değer küçüldükçe üst bölge hassasiyeti artar"],["Üst bölge X nokta sayısı","Pozitif tam sayı","Parçacığın piksel boyutuna dayanır; değer küçüldükçe üst bölgede yatay hassasiyet artar"],["Üst bölge Y nokta sayısı","Pozitif tam sayı","Parçacığın piksel boyutuna dayanır; değer küçüldükçe üst bölgede dikey hassasiyet artar"],["Alt bölge eşiği","Pozitif tam sayı","Arka plan ile parçacık arasındaki parlaklık farkına dayanır; değer küçüldükçe alt bölge hassasiyeti artar"],["Alt bölge X nokta sayısı","Pozitif tam sayı","Parçacığın piksel boyutuna dayanır; değer küçüldükçe alt bölgede yatay hassasiyet artar"],["Alt bölge Y nokta sayısı","Pozitif tam sayı","Parçacığın piksel boyutuna dayanır; değer küçüldükçe alt bölgede dikey hassasiyet artar"],["Sol/sağ maskeleme kutusu parametreleri","Pozitif tam sayı","Şişe tabanının iki yanı referans alınarak dinamik sol/sağ maskeleme kutularının genişlik, yükseklik, X ve Y değerlerini tanımlar"],["Maskeli alanda ön plan parlaklık azaltma","-1 = Kapalı","Maskeleme kutusu içindeki hareketli yabancı parçacıkları algılar; değer büyüdükçe algılama hassasiyeti azalır"],["Maskeli ön plan aralığı daraltma X","Pozitif tam sayı","Maskeleme kutusu içindeki yatay hareket aralığını sınırlar; değer büyüdükçe algılama hassasiyeti azalır"],["Maskeli ön plan aralığı daraltma Y","Pozitif tam sayı","Maskeleme kutusu içindeki dikey hareket aralığını sınırlar; değer büyüdükçe algılama hassasiyeti azalır"],["Arka plan filtreleme etkinleştirme","0 = Kapalı / 1 = Açık","Sıvı yüzeyi yakınındaki parçacıkları korurken yüzey kaynaklı yanlış algılamaları azaltır, ancak yüzeyin kararlı olmasını gerektirir"],["Arka plan beyaz çizgisi – referans başlangıcı","Pozitif tam sayı","Beyaz çizgi ile şişe tabanı arasındaki mesafe"],["Arka plan mor çizgisi – referans sonu","Pozitif tam sayı","Mor çizgi ile beyaz çizgi arasındaki mesafe; aradaki bölge referans arka planı oluşturmak için kullanılır"],["Arka plan sarı çizgisi – maskeleme çizgisi","Pozitif tam sayı","Algılama alanının üst sınırı ile sarı çizgi arasındaki mesafe; bu bölgeye arka plan maskelemesi uygulanır"],["Arka plan eşikleri 1 ve 2","Tam sayı","Referans arka planla gri değer farkının mutlak değeri eşiği aşarsa bölge maskeleme değerlendirmesine alınır"],["skerB_x / skerB_y","Pozitif tam sayı","Gerçek arka plan maskeleme alanını belirler; çok küçük değer yüzeyi eksik maskeleyebilir, çok büyük değer yüzey algılamasını devre dışı bırakabilir"],["shrk_tlx","Pozitif tam sayı","Üst sınırı aşağı taşır ve sıvı yüzeyi ile şişe tabanı arasındaki alanı daraltır"],["shrk_brx","Pozitif tam sayı","Alt sınırı yukarı taşır ve şişe tabanı ile sıvı yüzeyi arasındaki alanı daraltır"],["shrk_tly","Pozitif tam sayı","Sağ sınırı sola taşır ve algılama genişliğini sağdan sola daraltır"],["shrk_bry","Pozitif tam sayı","Sol sınırı sağa taşır ve algılama genişliğini soldan sağa daraltır"],["sx_len_min","Pozitif tam sayı","Dikey yöndeki minimum algılama alanı sınırı"],["sy_len_min","Pozitif tam sayı","Yatay yöndeki minimum algılama alanı sınırı"],["seq_begin","Pozitif tam sayı","Alınan görüntü dizisinin başından sayıldığında X’inci karede algılamayı başlatır"],["seq_rbegin","Pozitif tam sayı","Alınan görüntü dizisinin sonundan sayıldığında X’inci kareden itibaren algılamayı hariç tutar"],["enforce","Pozitif tam sayı","Görüntü dizisi karanlık olduğunda algılama için parlaklığı artırır"],["fg_neg1_pos2","1–3 arası tam sayı","1 açık renkli izleri, 2 koyu renkli izleri, 3 hem açık hem koyu renkli izleri algılar"],["İkincil filtreleme etkinleştirme","0 = Kapalı / 1 = Açık","Alan, kompaktlık, çevre, uzun kenar ve nokta sayısını değerlendirerek kabarcık ve benzeri sıvı parazitlerini bastırır"],["Filtre alanı alt/üst sınırları","Pozitif tam sayı","Algılama kutusunun piksel alanı alt sınırın altındaysa veya üst sınırın üzerindeyse kutuyu filtreler"],["Filtre kompaktlık alt/üst sınırları","Ondalık sayı","Kompaktlığı ölçüt olarak kullanır; noktasal kusurlar için aralığı daraltın, uzamış kusurlar için genişletin"],["Filtre çevre alt/üst sınırları","Pozitif tam sayı","Çevreyi ölçüt olarak kullanır; noktasal kusurların alanı ve çevresi küçükken uzamış kusurların çevresi uzun olabilir"],["Filtre gösterimini etkinleştirme","0 = Kapalı / 1 = Açık","Filtrelenen parazitleri mavi renkte gösterir"],["Filtre kutusu uzun kenarı","Pozitif tam sayı","Uzamış kusurları önemli ölçüde etkiler; değer büyüdükçe filtreleme gücü artar"],["Filtre kutusu nokta sayısı","Pozitif tam sayı","Algılama kutusundaki piksel sayısı eşiği; değer büyüdükçe filtreleme gücü artar"],["hl_bin","Pozitif tam sayı","Sıvı yüzeyi kontur analizine girecek aday piksel değeri; artırmak yanlış algılamayı azaltır fakat zayıf kusurları kaçırabilir, azaltmak gürültüyü artırır"],["hl_contour_smooth","Tek tam sayı ≥ 3","Sıvı yüzeyi konturunu yumuşatır; değer büyüdükçe yumuşatma artar, ancak normal eğri ve köşelerde daha büyük sapmalar oluşabilir"],["hl_contour_dist","Pozitif tam sayı","Yüzey konturu ile yumuşatılmış kontur arasındaki mesafe eşiği; büyük değer yalnız belirgin bozulmaları tutar, yanlış alarmı azaltır ancak zayıf kusurları kaçırabilir"],["hl_level_frms","Pozitif tam sayı","Çok kareli doğrulama eşiği; değer büyüdükçe daha fazla geçerli kare gerekir, yanlış alarm azalır ancak kaçırma artar"],["hl_level_single_frm","Pozitif tam sayı","Tek karedeki algılama kutusunun sıfır olmayan nokta eşiği; nokta sayısı bu değere ulaştığında kutu geçer, dolayısıyla büyük değer daha katıdır"],["mask_one_by_one","0 = Kapalı / 1 = Açık","Birden fazla maskenin ayrı ayrı işlenip işlenmeyeceğini belirler; açıkken her maske alanı DL algılama modülüyle ayrı işlenir"],["mask_dilate_width","Pozitif tam sayı","Maske genişletme çekirdeğinin toplam genişliği; değer büyüdükçe yatay kapsama artar"],["mask_dilate_height","Pozitif tam sayı","Maske genişletme çekirdeğinin toplam yüksekliği; değer büyüdükçe dikey kapsama artar"]]},"es":{"htmlLang":"es","name":"Español","title":"Parámetros comunes de detección de partículas","label":"Idioma","headers":["Parámetro","Rango","Función"],"count":"49 parámetros","print":"Imprimir / Guardar como PDF","rows":[["Rango de ruido X","Entero de 3 a 9","Ventana horizontal de coincidencia de ruido; un valor mayor amplía el área de coincidencia y refuerza el enmascaramiento, pero puede ocultar defectos lentos"],["Rango de ruido Y","Entero de 3 a 9","Ventana vertical de coincidencia de ruido; un valor mayor amplía el área de coincidencia y refuerza el enmascaramiento, pero puede ocultar defectos lentos"],["Supresión de ruido","Decimal de 0 a 2","Cuanto mayor sea el valor, más fuerte será el enmascaramiento"],["Brillo de puntos de ruido","Entero positivo","Umbral de variación de brillo para anomalías en posiciones fijas; un valor mayor solo incluye cambios más evidentes en la evaluación"],["Frecuencia de puntos de ruido","Entero positivo","Número de fotogramas requerido para una anomalía fija; un valor mayor dificulta clasificarla como ruido fijo y favorece la detección de defectos reales"],["Filtrado de puntos de ruido","Decimal","Intensidad de filtrado aplicada a puntos fijos que cumplen las condiciones de brillo y frecuencia; un valor mayor refuerza el enmascaramiento"],["cnt_shift","Entero positivo","Se utiliza cuando las partículas extrañas que se mueven muy lentamente son difíciles de detectar con los ajustes normales"],["Límite verde de las zonas","Entero (píxeles)","Divide el área de detección en zonas superior e inferior para aplicar sensibilidades distintas"],["Umbral de la zona superior","Entero positivo","Se basa en la diferencia de brillo entre el fondo y la partícula; un valor menor aumenta la sensibilidad de la zona superior"],["Número de puntos X de la zona superior","Entero positivo","Se basa en el tamaño de la partícula en píxeles; un valor menor aumenta la sensibilidad horizontal de la zona superior"],["Número de puntos Y de la zona superior","Entero positivo","Se basa en el tamaño de la partícula en píxeles; un valor menor aumenta la sensibilidad vertical de la zona superior"],["Umbral de la zona inferior","Entero positivo","Se basa en la diferencia de brillo entre el fondo y la partícula; un valor menor aumenta la sensibilidad de la zona inferior"],["Número de puntos X de la zona inferior","Entero positivo","Se basa en el tamaño de la partícula en píxeles; un valor menor aumenta la sensibilidad horizontal de la zona inferior"],["Número de puntos Y de la zona inferior","Entero positivo","Se basa en el tamaño de la partícula en píxeles; un valor menor aumenta la sensibilidad vertical de la zona inferior"],["Parámetros de los cuadros de máscara izquierdo/derecho","Entero positivo","Define el ancho, la altura, X e Y de los cuadros de máscara dinámicos izquierdo/derecho con referencia a los lados del fondo del frasco"],["Reducción de brillo del primer plano enmascarado","-1 = Desactivado","Se utiliza para detectar partículas móviles dentro del cuadro de máscara; un valor mayor reduce la sensibilidad de detección"],["Reducción del rango del primer plano X","Entero positivo","Limita el movimiento horizontal dentro del cuadro de máscara; un valor mayor reduce la sensibilidad de detección"],["Reducción del rango del primer plano Y","Entero positivo","Limita el movimiento vertical dentro del cuadro de máscara; un valor mayor reduce la sensibilidad de detección"],["Activación del filtrado de fondo","0 = Desactivado / 1 = Activado","Reduce falsas detecciones cerca de la superficie del líquido sin perder partículas próximas, pero requiere una superficie estable"],["Línea blanca de fondo – inicio de referencia","Entero positivo","Distancia entre la línea blanca y el fondo del frasco"],["Línea morada de fondo – fin de referencia","Entero positivo","Distancia entre la línea morada y la blanca; la zona entre ambas se utiliza para crear el fondo de referencia"],["Línea amarilla de fondo – línea de máscara","Entero positivo","Distancia desde el límite superior del área de detección hasta la línea amarilla; esta zona se enmascara como fondo"],["Umbrales de fondo 1 y 2","Entero","Una zona se considera para el enmascaramiento cuando la diferencia absoluta de nivel de gris respecto al fondo de referencia supera el umbral"],["skerB_x / skerB_y","Entero positivo","Controla el alcance real del enmascaramiento de fondo; un valor demasiado bajo puede dejar la superficie sin cubrir y uno demasiado alto puede impedir su detección"],["shrk_tlx","Entero positivo","Desplaza el límite superior hacia abajo y reduce el espacio entre la superficie del líquido y el fondo del frasco"],["shrk_brx","Entero positivo","Desplaza el límite inferior hacia arriba y reduce el espacio entre el fondo del frasco y la superficie del líquido"],["shrk_tly","Entero positivo","Desplaza el límite derecho hacia la izquierda y reduce el ancho de detección de derecha a izquierda"],["shrk_bry","Entero positivo","Desplaza el límite izquierdo hacia la derecha y reduce el ancho de detección de izquierda a derecha"],["sx_len_min","Entero positivo","Límite mínimo del área de detección en dirección vertical"],["sy_len_min","Entero positivo","Límite mínimo del área de detección en dirección horizontal"],["seq_begin","Entero positivo","Inicia la detección en el fotograma X contando desde el principio de la secuencia adquirida"],["seq_rbegin","Entero positivo","Excluye la detección desde el fotograma X contando desde el final de la secuencia adquirida"],["enforce","Entero positivo","Aumenta el brillo para la detección cuando la secuencia de imágenes es demasiado oscura"],["fg_neg1_pos2","Entero de 1 a 3","1 detecta rastros claros; 2 detecta rastros oscuros; 3 detecta rastros claros y oscuros"],["Activación del filtrado secundario","0 = Desactivado / 1 = Activado","Suprime burbujas e interferencias similares evaluando área, compacidad, perímetro, lado largo y número de puntos"],["Límites de área del filtro","Entero positivo","Filtra un cuadro detectado cuando su área en píxeles está por debajo del límite inferior o por encima del superior"],["Límites de compacidad del filtro","Decimal","Usa la compacidad como criterio; estreche el rango para defectos puntuales y amplíelo para defectos alargados"],["Límites de perímetro del filtro","Entero positivo","Usa el perímetro como criterio; los defectos puntuales suelen tener área y perímetro pequeños, mientras que los alargados pueden tener un perímetro largo"],["Activación de visualización del filtro","0 = Desactivado / 1 = Activado","Muestra en azul las interferencias filtradas"],["Lado largo del cuadro de filtro","Entero positivo","Afecta especialmente a los defectos alargados; un valor mayor aumenta la intensidad del filtrado"],["Número de puntos del cuadro de filtro","Entero positivo","Umbral del número de píxeles dentro del cuadro detectado; un valor mayor aumenta la intensidad del filtrado"],["hl_bin","Entero positivo","Valor de píxel candidato para el análisis del contorno de la superficie; aumentarlo reduce falsos positivos pero puede omitir defectos débiles, reducirlo aumenta el ruido"],["hl_contour_smooth","Entero impar ≥ 3","Suaviza el contorno de la superficie del líquido; un valor mayor aumenta el suavizado, pero puede crear desviaciones en curvas o esquinas normales"],["hl_contour_dist","Entero positivo","Umbral de distancia entre el contorno de la superficie y el contorno suavizado; un valor mayor conserva solo deformaciones marcadas, reduce falsos positivos pero puede omitir defectos débiles"],["hl_level_frms","Entero positivo","Umbral de confirmación en varios fotogramas; un valor mayor exige más fotogramas válidos, reduce falsos positivos pero aumenta las omisiones"],["hl_level_single_frm","Entero positivo","Umbral de puntos no nulos en un cuadro de un solo fotograma; el cuadro se valida al alcanzar este valor, por lo que un valor mayor es más estricto"],["mask_one_by_one","0 = Desactivado / 1 = Activado","Controla si varias máscaras se procesan por separado; al activarlo, cada zona de máscara se procesa individualmente con el módulo de detección DL"],["mask_dilate_width","Entero positivo","Ancho total del núcleo de dilatación de la máscara; un valor mayor aumenta la cobertura horizontal"],["mask_dilate_height","Entero positivo","Altura total del núcleo de dilatación de la máscara; un valor mayor aumenta la cobertura vertical"]]}};
     versions.it = {
@@ -669,6 +869,8 @@
       document.getElementById("header-function")
     ];
     const tbody = document.getElementById("parameter-rows");
+    const printButton = document.getElementById("print-button");
+    const registrationPrintButton = document.getElementById("registration-print-button");
     const views = [...document.querySelectorAll("[data-view]")];
     const navLinks = [...document.querySelectorAll(".site-nav [data-view-link]")];
     const siteElements = {
@@ -689,19 +891,30 @@
       intro: document.getElementById("registration-intro"),
       note: document.getElementById("registration-note")
     };
+    const canPrint = () => typeof window.prototypeCanUseRole === "function"
+      && window.prototypeCanUseRole("debugger");
 
     function activateView() {
       const requested = location.hash.slice(1);
-      const current = views.some(view => view.dataset.view === requested) ? requested : "home";
+      const viewExists = views.some(view => view.dataset.view === requested);
+      const canOpenRequested = typeof window.prototypeCanAccessView !== "function"
+        || window.prototypeCanAccessView(requested);
+      const current = viewExists && canOpenRequested ? requested : "home";
+      if (requested && requested !== current) history.replaceState(null, "", "#home");
       views.forEach(view => { view.hidden = view.dataset.view !== current; });
       navLinks.forEach(link => {
         if (link.dataset.viewLink === current) link.setAttribute("aria-current", "page");
         else link.removeAttribute("aria-current");
       });
       const site = window.siteTranslations[select.value] || window.siteTranslations.zh;
-      document.title = current === "parameters"
-        ? `${versions[select.value].title} | ${site.brand}`
-        : current === "media" ? site.registrationDocTitle : site.homeDocTitle;
+      const workflowTitle = typeof window.getWorkflowViewTitle === "function"
+        ? window.getWorkflowViewTitle(current)
+        : "";
+      document.title = workflowTitle
+        ? `${workflowTitle} | ${site.brand}`
+        : current === "parameters"
+          ? `${versions[select.value].title} | ${site.brand}`
+          : current === "media" ? site.registrationDocTitle : site.homeDocTitle;
       window.scrollTo({ top: 0, behavior: "auto" });
     }
 
@@ -714,6 +927,8 @@
       languageLabel.textContent = site.languageLabel;
       currentLanguage.textContent = version.name;
       parameterCount.textContent = version.count;
+      if (printButton) printButton.textContent = version.print;
+      if (registrationPrintButton) registrationPrintButton.textContent = site.print;
       version.headers.forEach((text, index) => { headers[index].textContent = text; });
 
       const fragment = document.createDocumentFragment();
@@ -728,6 +943,7 @@
         fragment.appendChild(tr);
       });
       tbody.replaceChildren(fragment);
+      if (typeof window.renderWorkflowLanguage === "function") window.renderWorkflowLanguage(code);
       Object.entries(siteElements).forEach(([key, element]) => {
         if (element && site[key]) element.textContent = site[key];
       });
@@ -738,6 +954,27 @@
 
     select.addEventListener("change", event => renderLanguage(event.target.value));
     window.addEventListener("hashchange", activateView);
+    window.addEventListener("prototype-role-change", activateView);
+    if (printButton) {
+      printButton.addEventListener("click", () => {
+        if (!canPrint()) return;
+        document.body.classList.remove("print-registration");
+        window.print();
+      });
+    }
+    if (registrationPrintButton) {
+      registrationPrintButton.addEventListener("click", () => {
+        if (!canPrint()) return;
+        document.body.classList.add("print-registration");
+        window.print();
+      });
+    }
+    window.addEventListener("beforeprint", () => {
+      document.body.classList.toggle("print-denied", !canPrint());
+    });
+    window.addEventListener("afterprint", () => {
+      document.body.classList.remove("print-registration", "print-denied");
+    });
 
     const savedLanguage = localStorage.getItem("particle-parameter-language");
     if (savedLanguage && versions[savedLanguage]) { select.value = savedLanguage; }
