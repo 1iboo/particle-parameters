@@ -319,21 +319,6 @@
       font-weight: 600;
     }
 
-    .demo-video {
-      display: block;
-      width: 100%;
-      margin-top: 18px;
-      border-radius: 12px;
-      background: #071725;
-      box-shadow: 0 12px 28px rgba(20, 55, 86, 0.16);
-      aspect-ratio: 16 / 9;
-    }
-
-    .video-caption {
-      margin-top: 12px !important;
-      font-size: 14px;
-    }
-
     .app-header {
       display: flex;
       align-items: center;
@@ -617,8 +602,7 @@
       }
       body.print-registration #media > .eyebrow,
       body.print-registration #media > .section-copy,
-      body.print-registration #registration-print-button,
-      body.print-registration .video-card { display: none !important; }
+      body.print-registration #registration-print-button { display: none !important; }
       body.print-registration #media h1 {
         margin-bottom: 12px;
         color: #000;
@@ -672,7 +656,7 @@
         <div>
           <p class="eyebrow">PARTICLE DETECTION · TEST SITE</p>
           <h1 id="home-title">粒子检测知识与参数中心</h1>
-          <p id="home-copy" class="hero-copy">集中查看粒子检测与定位配准常用参数，并通过操作视频了解设置过程。</p>
+          <p id="home-copy" class="hero-copy">集中查看粒子检测与定位配准常用参数，便于查询和调试。</p>
           <div class="hero-actions">
             <a id="home-particle-button" class="primary-button" href="#parameters" data-view-link="parameters">查看粒子参数</a>
             <a id="home-location-button" class="secondary-button" href="#media" data-view-link="media">查看定位配准</a>
@@ -717,7 +701,7 @@
       <h1 id="registration-title">定位配准常用参数说明</h1>
         <button id="registration-print-button" class="print-button" type="button">打印 / 保存为 PDF</button>
       </div>
-      <p id="registration-copy" class="section-copy">本页集中说明定位配准常用参数，并配合操作视频展示设置过程。</p>
+      <p id="registration-copy" class="section-copy">本页集中说明定位配准常用参数。</p>
       <div class="registration-layout">
         <article class="media-card">
           <h2 id="registration-modules-title">定位/配准模块</h2>
@@ -739,15 +723,6 @@
             </table>
           </div>
           <p id="registration-note" class="registration-note">参数值为 -1 时通常表示关闭或不启用对应限制；调整前建议先保存原始 XML。</p>
-        </article>
-        <article class="media-card video-card">
-          <h2 id="video-title">定位配准操作视频</h2>
-          <p id="video-copy">点击播放可查看定位配准的实际操作过程，手机端支持全屏播放。</p>
-          <video class="demo-video" controls preload="metadata" playsinline>
-            <source src="media/particle-detection-demo.mp4" type="video/mp4">
-            当前浏览器不支持视频播放，请使用最新版浏览器打开。
-          </video>
-          <p id="video-caption" class="video-caption">屏幕录制 · MP4 视频</p>
         </article>
       </div>
     </section>
@@ -848,9 +823,6 @@
       tableTitle: document.getElementById("registration-table-title"),
       intro: document.getElementById("registration-intro"),
       note: document.getElementById("registration-note"),
-      videoTitle: document.getElementById("video-title"),
-      videoCopy: document.getElementById("video-copy"),
-      videoCaption: document.getElementById("video-caption"),
       registrationPrint: document.getElementById("registration-print-button")
     };
 
