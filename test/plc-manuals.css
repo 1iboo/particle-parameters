@@ -213,7 +213,9 @@
   letter-spacing: 0.04em;
 }
 
+.diagnostic-title-group { display: grid; gap: 3px; min-width: 0; }
 .diagnostic-title { color: var(--navy); font-weight: 750; line-height: 1.45; }
+.diagnostic-original { color: var(--muted); font-size: 12px; line-height: 1.4; overflow-wrap: anywhere; }
 .diagnostic-version { color: var(--muted); font-size: 13px; line-height: 1.45; }
 .diagnostic-page { color: var(--muted); font-size: 13px; }
 .diagnostic-open-link {

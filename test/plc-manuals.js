@@ -132,7 +132,7 @@
     const matches = records
       .filter(record => manual === "all" || record.manual === manual)
       .filter(record => category === "all" || record.code.startsWith(category))
-      .filter(record => !query || record.code.includes(query) || record.title.toLocaleUpperCase().includes(query))
+      .filter(record => !query || record.code.includes(query) || record.title.toLocaleUpperCase().includes(query) || (record.titleZh || "").toLocaleUpperCase().includes(query))
       .sort((a, b) => {
         if (query && a.code === query && b.code !== query) return -1;
         if (query && b.code === query && a.code !== query) return 1;
@@ -145,7 +145,13 @@
       if (!source) return;
       const row = element("article", "diagnostic-result");
       row.appendChild(element("span", "diagnostic-code", record.code));
-      row.appendChild(element("span", "diagnostic-title", record.title));
+      const titleGroup = element("span", "diagnostic-title-group");
+      const translatedTitle = record.titleZh || record.title;
+      titleGroup.appendChild(element("span", "diagnostic-title", language === "zh" ? translatedTitle : record.title));
+      if (language === "zh" && translatedTitle !== record.title) {
+        titleGroup.appendChild(element("span", "diagnostic-original", record.title));
+      }
+      row.appendChild(titleGroup);
       row.appendChild(element("span", "diagnostic-version", source.firmware));
       row.appendChild(element("span", "diagnostic-page", format(t("pageLabel"), { page: record.page })));
       const link = element("a", "diagnostic-open-link", t("openPage"));
