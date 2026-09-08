@@ -13,10 +13,10 @@
         ["side_right_register", "利用瓶体右侧边缘计算配准补偿"]
       ],
       rows: [
-        ["开启", "0关闭／1开启", "启用或关闭定位模块"],
-        ["扫描/瓶沿", "0关闭／1开启", "启用扫描定位，根据瓶沿特征寻找定位边缘"],
-        ["sbOrbX", "0或1", "选择扫描轴；1主要沿X方向扫描，0主要沿Y方向扫描"],
-        ["sbInc", "0或1", "选择坐标增大或减小方向作为扫描方向"],
+        ["开启", "开关（未勾选／勾选）", "定位模块总开关；勾选时启用，未勾选时关闭"],
+        ["扫描/瓶沿", "开关（未勾选／勾选）", "扫描定位开关；勾选后根据瓶沿特征寻找定位边缘"],
+        ["sbOrbX", "开关（未勾选／勾选）", "扫描轴选择开关；勾选主要沿X方向扫描，未勾选主要沿Y方向扫描"],
+        ["sbInc", "开关（未勾选／勾选）", "扫描方向选择开关；勾选按坐标增大方向扫描，未勾选按坐标减小方向扫描"],
         ["阈值", "整数，可正可负", "边缘灰度差门槛；绝对值越大，要求明暗变化越明显"],
         ["sbrd var", "非负整数", "允许定位边界波动的范围；值越大，对不平整边缘的容忍度越高"],
         ["参考值-位置偏移", "整数（像素）", "从检测边缘偏移指定距离后获取参考灰度"],
@@ -43,10 +43,10 @@
         ["side_right_register", "Calculates registration compensation from the right bottle edge"]
       ],
       rows: [
-        ["switch on", "0 = Off / 1 = On", "Enables or disables the location module"],
-        ["b scan", "0 = Off / 1 = On", "Enables scan-based location and finds an edge from the bottle-rim feature"],
-        ["sbOrbX", "0 or 1", "Selects the scan axis; 1 mainly scans along X and 0 mainly along Y"],
-        ["sbInc", "0 or 1", "Selects increasing or decreasing coordinates as the scan direction"],
+        ["switch on", "Checkbox (unchecked / checked)", "Main location-module switch; checked enables the module and unchecked disables it"],
+        ["b scan", "Checkbox (unchecked / checked)", "Scan-location switch; when checked, the bottle-rim feature is used to find the location edge"],
+        ["sbOrbX", "Checkbox (unchecked / checked)", "Scan-axis switch; checked mainly scans along X and unchecked mainly scans along Y"],
+        ["sbInc", "Checkbox (unchecked / checked)", "Scan-direction switch; checked scans toward increasing coordinates and unchecked toward decreasing coordinates"],
         ["diff thr", "Signed integer", "Gray-difference threshold for an edge; a larger absolute value requires stronger contrast"],
         ["sbrd var", "Non-negative integer", "Allowed boundary variation; a larger value tolerates a less even edge"],
         ["sref offset", "Integer (pixels)", "Samples the reference gray value at the specified offset from the detected edge"],
@@ -73,10 +73,10 @@
         ["side_right_register", "Calcule la compensation de recalage à partir du bord droit"]
       ],
       rows: [
-        ["Activation", "0 = désactivé / 1 = activé", "Active ou désactive le module de positionnement"],
-        ["Balayage / bord du flacon", "0 = désactivé / 1 = activé", "Active le positionnement par balayage à partir du bord du flacon"],
-        ["sbOrbX", "0 ou 1", "Sélectionne l’axe de balayage ; 1 pour X et 0 pour Y"],
-        ["sbInc", "0 ou 1", "Sélectionne le sens croissant ou décroissant des coordonnées"],
+        ["Activation", "Case à cocher (décochée / cochée)", "Interrupteur principal du module ; coché pour l’activer, décoché pour le désactiver"],
+        ["Balayage / bord du flacon", "Case à cocher (décochée / cochée)", "Active le balayage du bord du flacon lorsque la case est cochée"],
+        ["sbOrbX", "Case à cocher (décochée / cochée)", "Sélectionne l’axe ; coché pour X, décoché pour Y"],
+        ["sbInc", "Case à cocher (décochée / cochée)", "Sélectionne le sens ; coché vers les coordonnées croissantes, décoché vers les coordonnées décroissantes"],
         ["Seuil de différence", "Entier signé", "Seuil d’écart de gris du bord ; une valeur absolue élevée exige un contraste plus marqué"],
         ["sbrd var", "Entier non négatif", "Variation de bord autorisée ; une valeur élevée tolère un bord moins régulier"],
         ["Décalage de position de référence", "Entier (pixels)", "Échantillonne le gris de référence à la distance indiquée du bord détecté"],
@@ -103,10 +103,10 @@
         ["side_right_register", "Рассчитывает компенсацию совмещения по правому краю"]
       ],
       rows: [
-        ["Включение", "0 = выкл. / 1 = вкл.", "Включает или отключает модуль позиционирования"],
-        ["Сканирование / край флакона", "0 = выкл. / 1 = вкл.", "Включает поиск позиции сканированием по краю флакона"],
-        ["sbOrbX", "0 или 1", "Выбирает ось сканирования: 1 — X, 0 — Y"],
-        ["sbInc", "0 или 1", "Выбирает сканирование по возрастанию или убыванию координат"],
+        ["Включение", "Флажок (снят / установлен)", "Главный переключатель модуля: установлен — модуль включен, снят — выключен"],
+        ["Сканирование / край флакона", "Флажок (снят / установлен)", "При установленном флажке включает поиск позиции по краю флакона"],
+        ["sbOrbX", "Флажок (снят / установлен)", "Выбор оси: установлен — X, снят — Y"],
+        ["sbInc", "Флажок (снят / установлен)", "Выбор направления: установлен — к увеличению координат, снят — к уменьшению"],
         ["Порог разности", "Целое со знаком", "Порог перепада яркости края; больший модуль требует более выраженного контраста"],
         ["sbrd var", "Неотрицательное целое", "Допустимое колебание границы; большее значение допускает менее ровный край"],
         ["Смещение опорной позиции", "Целое (пиксели)", "Берёт опорную яркость на заданном расстоянии от найденного края"],
@@ -133,10 +133,10 @@
         ["side_right_register", "Sağ şişe kenarından kayıt telafisi hesaplar"]
       ],
       rows: [
-        ["Etkinleştirme", "0 = Kapalı / 1 = Açık", "Konumlandırma modülünü açar veya kapatır"],
-        ["Tarama / şişe kenarı", "0 = Kapalı / 1 = Açık", "Şişe kenarı özelliğine göre taramalı konumlandırmayı etkinleştirir"],
-        ["sbOrbX", "0 veya 1", "Tarama eksenini seçer; 1 X, 0 Y eksenidir"],
-        ["sbInc", "0 veya 1", "Koordinatların artan veya azalan yönünü tarama yönü olarak seçer"],
+        ["Etkinleştirme", "Onay kutusu (işaretsiz / işaretli)", "Ana modül anahtarıdır; işaretliyken etkin, işaretsizken kapalıdır"],
+        ["Tarama / şişe kenarı", "Onay kutusu (işaretsiz / işaretli)", "İşaretlendiğinde şişe kenarına göre taramalı konumlandırmayı etkinleştirir"],
+        ["sbOrbX", "Onay kutusu (işaretsiz / işaretli)", "Tarama eksenini seçer; işaretliyken X, işaretsizken Y yönünde tarar"],
+        ["sbInc", "Onay kutusu (işaretsiz / işaretli)", "Tarama yönünü seçer; işaretliyken artan, işaretsizken azalan koordinatlara doğru tarar"],
         ["Fark eşiği", "İşaretli tam sayı", "Kenar gri farkı eşiğidir; büyük mutlak değer daha güçlü kontrast ister"],
         ["sbrd var", "Negatif olmayan tam sayı", "İzin verilen sınır değişimidir; büyük değer düzensiz kenara daha çok tolerans sağlar"],
         ["Referans konum ofseti", "Tam sayı (piksel)", "Referans gri değerini bulunan kenardan belirtilen uzaklıkta örnekler"],
@@ -163,10 +163,10 @@
         ["side_right_register", "Calcola la compensazione di registrazione dal bordo destro"]
       ],
       rows: [
-        ["Attivazione", "0 = Disattivato / 1 = Attivato", "Attiva o disattiva il modulo di posizionamento"],
-        ["Scansione / bordo bottiglia", "0 = Disattivato / 1 = Attivato", "Attiva il posizionamento tramite scansione e individua il bordo della bottiglia"],
-        ["sbOrbX", "0 o 1", "Seleziona l’asse di scansione: 1 principalmente lungo X, 0 principalmente lungo Y"],
-        ["sbInc", "0 o 1", "Seleziona come direzione di scansione il verso crescente o decrescente delle coordinate"],
+        ["Attivazione", "Casella (deselezionata / selezionata)", "Interruttore principale del modulo; selezionata lo attiva, deselezionata lo disattiva"],
+        ["Scansione / bordo bottiglia", "Casella (deselezionata / selezionata)", "Quando è selezionata, attiva il posizionamento tramite il bordo della bottiglia"],
+        ["sbOrbX", "Casella (deselezionata / selezionata)", "Seleziona l’asse; selezionata per X, deselezionata per Y"],
+        ["sbInc", "Casella (deselezionata / selezionata)", "Seleziona il verso; selezionata verso coordinate crescenti, deselezionata verso coordinate decrescenti"],
         ["Soglia differenza", "Intero con segno", "Soglia della differenza di grigio del bordo; un valore assoluto maggiore richiede un contrasto più marcato"],
         ["sbrd var", "Intero non negativo", "Variazione ammessa del bordo; un valore maggiore tollera bordi meno uniformi"],
         ["Offset posizione di riferimento", "Intero (pixel)", "Campiona il valore di grigio di riferimento alla distanza specificata dal bordo rilevato"],
@@ -193,10 +193,10 @@
         ["side_right_register", "Calcula la compensación de registro a partir del borde derecho"]
       ],
       rows: [
-        ["Activación", "0 = Desactivado / 1 = Activado", "Activa o desactiva el módulo de posicionamiento"],
-        ["Escaneo / borde del frasco", "0 = Desactivado / 1 = Activado", "Activa el posicionamiento por escaneo según el borde del frasco"],
-        ["sbOrbX", "0 o 1", "Selecciona el eje de escaneo; 1 corresponde a X y 0 a Y"],
-        ["sbInc", "0 o 1", "Selecciona el sentido creciente o decreciente de las coordenadas"],
+        ["Activación", "Casilla (desmarcada / marcada)", "Interruptor principal del módulo; marcada lo activa y desmarcada lo desactiva"],
+        ["Escaneo / borde del frasco", "Casilla (desmarcada / marcada)", "Al marcarla, activa el posicionamiento por el borde del frasco"],
+        ["sbOrbX", "Casilla (desmarcada / marcada)", "Selecciona el eje; marcada para X y desmarcada para Y"],
+        ["sbInc", "Casilla (desmarcada / marcada)", "Selecciona el sentido; marcada hacia coordenadas crecientes y desmarcada hacia decrecientes"],
         ["Umbral de diferencia", "Entero con signo", "Umbral de diferencia de gris del borde; un valor absoluto mayor exige más contraste"],
         ["sbrd var", "Entero no negativo", "Variación de borde permitida; un valor mayor tolera un borde menos uniforme"],
         ["Desplazamiento de posición de referencia", "Entero (píxeles)", "Muestrea el gris de referencia a la distancia indicada del borde detectado"],
