@@ -239,10 +239,21 @@
     tbody.replaceChildren(fragment);
   };
 
+  const locationSwitchRows = {
+    zh: [["直线拟合使能", "开关（未勾选／勾选）", "勾选后对检测到的边缘进行直线拟合，未勾选时使用原始边缘"], ["手动区域使能", "开关（未勾选／勾选）", "勾选后使用手动设置的 ROI 区域进行定位，未勾选时使用自动区域"]],
+    en: [["Line fitting enable", "Checkbox (unchecked / checked)", "When checked, fits a line to the detected edge; when unchecked, uses the raw edge"], ["Manual region enable", "Checkbox (unchecked / checked)", "When checked, uses the manually defined ROI; when unchecked, uses the automatic region"]],
+    fr: [["Activation de l’ajustement linéaire", "Case à cocher (décochée / cochée)", "Cochée, ajuste une droite sur le bord détecté ; décochée, utilise le bord brut"], ["Activation de la zone manuelle", "Case à cocher (décochée / cochée)", "Cochée, utilise la ROI définie manuellement ; décochée, utilise la zone automatique"]],
+    ru: [["Включение аппроксимации прямой", "Флажок (снят / установлен)", "Установлен — аппроксимирует найденный край прямой; снят — использует исходный край"], ["Включение ручной области", "Флажок (снят / установлен)", "Установлен — использует заданную вручную ROI; снят — автоматическую область"]],
+    tr: [["Doğru uydurma etkinleştirme", "Onay kutusu (işaretsiz / işaretli)", "İşaretliyken algılanan kenara doğru uydurur; işaretsizken ham kenarı kullanır"], ["Manuel bölge etkinleştirme", "Onay kutusu (işaretsiz / işaretli)", "İşaretliyken manuel ROI kullanır; işaretsizken otomatik bölgeyi kullanır"]],
+    it: [["Attivazione adattamento della retta", "Casella (deselezionata / selezionata)", "Selezionata, adatta una retta al bordo rilevato; deselezionata, usa il bordo originale"], ["Attivazione area manuale", "Casella (deselezionata / selezionata)", "Selezionata, usa la ROI definita manualmente; deselezionata, usa l’area automatica"]],
+    es: [["Activación del ajuste lineal", "Casilla (desmarcada / marcada)", "Marcada, ajusta una recta al borde detectado; desmarcada, usa el borde original"], ["Activación de la región manual", "Casilla (desmarcada / marcada)", "Marcada, usa la ROI definida manualmente; desmarcada, usa la región automática"]]
+  };
+
   window.renderRegistrationParameters = code => {
     const version = registrationVersions[code] || registrationVersions.zh;
+    const extraRows = locationSwitchRows[code] || locationSwitchRows.en;
     renderRows("registration-module-rows", version.modules, version.moduleHeaders);
-    renderRows("registration-rows", version.rows, version.headers);
+    renderRows("registration-rows", version.rows.concat(extraRows), version.headers);
     document.getElementById("registration-modules-title").textContent = version.moduleTitle;
     document.getElementById("registration-modules-intro").textContent = version.moduleIntro;
     document.getElementById("registration-modules-language").textContent = version.name;
@@ -250,7 +261,7 @@
     document.getElementById("registration-module-header-name").textContent = version.moduleHeaders[0];
     document.getElementById("registration-module-header-function").textContent = version.moduleHeaders[1];
     document.getElementById("registration-current-language").textContent = version.name;
-    document.getElementById("registration-count").textContent = version.count;
+    document.getElementById("registration-count").textContent = code === "zh" ? "17 项参数" : `${version.rows.length + extraRows.length} parameters`;
     ["registration-header-name", "registration-header-range", "registration-header-function"].forEach((id, index) => {
       document.getElementById(id).textContent = version.headers[index];
     });

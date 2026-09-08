@@ -508,6 +508,8 @@
         <a id="nav-home" href="#home" data-view-link="home">首页</a>
         <a id="nav-parameters" href="#parameters" data-view-link="parameters">粒子参数</a>
         <a id="nav-media" href="#media" data-view-link="media">定位配准</a>
+        <a id="nav-dl" href="#dl" data-view-link="dl">DL 参数</a>
+        <a id="nav-defect" href="#defect" data-view-link="defect">缺陷检测</a>
         <a id="nav-support" href="#support" data-view-link="support" data-workflow-i18n="navSupport">问题排查</a>
         <a id="nav-plc" href="#plc" data-view-link="plc" data-plc-i18n="navPlc">PLC排查</a>
         <a id="nav-request" href="#request" data-view-link="request" data-min-role="debugger" data-workflow-i18n="navRequest" hidden>生成申请</a>
@@ -618,6 +620,28 @@
           <p id="registration-note" class="registration-note">参数值为 -1 时通常表示关闭或不启用对应限制；调整前建议先保存原始 XML。</p>
         </article>
       </div>
+    </section>
+
+    <section id="dl" class="view media-view" data-view="dl" hidden>
+      <p class="eyebrow">DEEP LEARNING</p>
+      <div class="registration-heading"><h1 id="dl-page-title">DL 模块常用参数说明</h1></div>
+      <p class="section-copy">根据离线程序 DL 参数 XML 字段整理。</p>
+      <div class="registration-layout"><article class="media-card">
+        <div class="table-shell registration-parameter-table"><div class="table-meta"><strong id="dl-language">中文</strong> · <span id="dl-count">20 项参数</span></div>
+          <table><thead><tr><th id="dl-header-name">参数名称</th><th id="dl-header-range">参数范围</th><th id="dl-header-function">具体作用</th></tr></thead><tbody id="dl-parameter-rows"></tbody></table>
+        </div>
+      </article></div>
+    </section>
+
+    <section id="defect" class="view media-view" data-view="defect" hidden>
+      <p class="eyebrow">DEFECT DETECTION</p>
+      <div class="registration-heading"><h1 id="defect-page-title">缺陷检测参数说明</h1></div>
+      <p class="section-copy">根据离线程序缺陷检测 XML 字段整理。</p>
+      <div class="registration-layout"><article class="media-card">
+        <div class="table-shell registration-parameter-table"><div class="table-meta"><strong id="defect-language">中文</strong> · <span id="defect-count">15 项参数</span></div>
+          <table><thead><tr><th id="defect-header-name">参数名称</th><th id="defect-header-range">参数范围</th><th id="defect-header-function">具体作用</th></tr></thead><tbody id="defect-parameter-rows"></tbody></table>
+        </div>
+      </article></div>
     </section>
 
     <section id="support" class="view workflow-view" data-view="support" hidden>
@@ -890,6 +914,7 @@
   </main>
 
   <script src="registration-parameters.js"></script>
+  <script src="advanced-parameters.js"></script>
   <script src="workflow-prototype.js"></script>
   <script src="drive-diagnostics-data.js"></script>
   <script src="plc-manuals.js"></script>
@@ -976,6 +1001,8 @@
       navHome: document.getElementById("nav-home"),
       navParameters: document.getElementById("nav-parameters"),
       navMedia: document.getElementById("nav-media"),
+      navDl: document.getElementById("nav-dl"),
+      navDefect: document.getElementById("nav-defect"),
       homeTitle: document.getElementById("home-title"),
       homeCopy: document.getElementById("home-copy"),
       particleButton: document.getElementById("home-particle-button"),
@@ -1015,7 +1042,10 @@
         ? `${workflowTitle || plcTitle} | ${site.brand}`
         : current === "parameters"
           ? `${versions[select.value].title} | ${site.brand}`
-          : current === "media" ? site.registrationDocTitle : site.homeDocTitle;
+          : current === "media" ? site.registrationDocTitle
+            : current === "dl" ? `${(window.advancedPageTitles && window.advancedPageTitles[select.value]?.dl) || "DL Parameters"} | ${site.brand}`
+              : current === "defect" ? `${(window.advancedPageTitles && window.advancedPageTitles[select.value]?.defect) || "Defect Detection Parameters"} | ${site.brand}`
+                : site.homeDocTitle;
       window.scrollTo({ top: 0, behavior: "auto" });
     }
 
@@ -1050,6 +1080,13 @@
         if (element && site[key]) element.textContent = site[key];
       });
       window.renderRegistrationParameters(code);
+      if (typeof window.renderAdvancedParameters === "function") window.renderAdvancedParameters(code);
+      const advancedNav = {
+        zh: ["DL 参数", "缺陷检测"], en: ["DL Parameters", "Defect Detection"], fr: ["Paramètres DL", "Détection des défauts"],
+        ru: ["Параметры DL", "Контроль дефектов"], tr: ["DL parametreleri", "Kusur algılama"], it: ["Parametri DL", "Rilevamento difetti"], es: ["Parámetros DL", "Detección de defectos"]
+      }[code] || ["DL Parameters", "Defect Detection"];
+      if (siteElements.navDl) siteElements.navDl.textContent = advancedNav[0];
+      if (siteElements.navDefect) siteElements.navDefect.textContent = advancedNav[1];
       localStorage.setItem("particle-parameter-language", code);
       activateView();
     }
