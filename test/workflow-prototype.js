@@ -376,8 +376,115 @@
     renderAll();
   };
 
+  const timeoutGuide = {
+  "zh": [
+    "深度学习检测超时排查与环境配置",
+    "工控机恢复镜像后，深度学习检测超时。先核对运行环境，再评估检测配方。",
+    "查看排查步骤",
+    "显卡设置｜安装显卡驱动后，打开 NVIDIA 控制面板。核对低延迟模式是否为「超高」，电源管理模式是否为「最高性能优先」。",
+    "内存与分页文件｜原文按每个模型约 5 GB 内存、1 GB 显存估算。对照实际峰值检查余量；内存不足可调整分页文件，不能用它补足显存。C 盘空间不足时，可将分页文件移到 D 盘，确认新设置生效，不要让所有驱动器都没有分页文件。",
+    "实时保护｜检查安全软件扫描是否与超时同时发生。仅在现场 IT 批准的受控测试中临时调整防护；测试结束后恢复，不把关闭实时保护作为生产默认设置。",
+    "电源计划｜打开 Windows 控制面板 → 电源选项，核对是否使用「高性能」；设备支持时按现场规范选用「卓越性能」。进入「更改计划设置」复核。",
+    "显卡锁频｜按设备配套教程核对是否已配置自动锁频。仅使用与该显卡及驱动匹配、经现场确认的文件。",
+    "仍然超时｜记录设备运行速度、超时工位、检测图像尺寸、每组拍摄张数和工控机硬件型号，交给技术人员。减少拍摄张数、减小检测尺寸或改用拼图检测后，须重新验证耗时和缺陷检出效果。"
+  ],
+  "en": [
+    "Deep learning inspection timeouts: troubleshooting and system setup",
+    "Use this checklist when inspection times out after restoring an industrial PC image.",
+    "Show troubleshooting steps",
+    "GPU settings｜After installing the driver, check NVIDIA Control Panel: Low Latency Mode should be Ultra and Power Management Mode should prefer maximum performance.",
+    "Memory and paging｜The guide estimates 5 GB of RAM and 1 GB of VRAM per model. Check peak usage. A paging file can supplement RAM, not VRAM. If C: is short on space, move paging to D: and verify that it remains active.",
+    "Real-time protection｜Check whether scans coincide with timeouts. Change protection only for a controlled test approved by site IT, then restore it.",
+    "Power plan｜Check High performance under Windows Power Options, or Ultimate Performance if supported and approved. Review the plan settings.",
+    "GPU clock settings｜Use only the approved clock configuration and instructions for the installed GPU and driver.",
+    "If timeouts persist｜Report line speed, station, input dimensions, frames per sequence and PC specifications. Revalidate timing and defect detection after reducing frame count or input size, or switching to tiled inference."
+  ],
+  "fr": [
+    "Délais d’inspection dépassés : diagnostic et configuration du poste",
+    "À vérifier après la restauration de l’image du PC industriel utilisé pour l’inspection par apprentissage profond.",
+    "Afficher les vérifications",
+    "Carte graphique｜Pilote installé, vérifier dans le panneau NVIDIA que la faible latence est réglée sur Ultra et que la gestion de l’alimentation privilégie les performances maximales.",
+    "Mémoire｜Prévoir à titre indicatif 5 Go de RAM et 1 Go de mémoire vidéo par modèle. Vérifier les pics réels. Le fichier d’échange complète la RAM, pas la mémoire vidéo. Si C: manque de place, le déplacer sur D: et vérifier son activation.",
+    "Protection en temps réel｜Vérifier si les analyses coïncident avec les dépassements. Toute modification doit être temporaire, autorisée par le service informatique et annulée après le test.",
+    "Alimentation｜Vérifier le mode Performances élevées, ou Performances optimales si le poste et les consignes du site le permettent. Contrôler les paramètres du mode.",
+    "Fréquence du GPU｜Suivre uniquement la procédure validée pour la carte et le pilote installés.",
+    "Si le délai reste dépassé｜Relever cadence, poste, dimensions des images, nombre de prises par séquence et matériel du PC. Après toute réduction du nombre ou de la taille des images, ou tout passage à une mosaïque, revalider la durée et la détection des défauts."
+  ],
+  "ru": [
+    "Тайм-аут нейросетевого контроля: диагностика и настройка",
+    "Проверки после восстановления промышленного ПК из образа.",
+    "Показать порядок проверки",
+    "Видеокарта｜После установки драйвера проверьте панель NVIDIA: режим низкой задержки — «Ультра», управление электропитанием — предпочтительна максимальная производительность.",
+    "Память｜Ориентир на модель: 5 ГБ ОЗУ и 1 ГБ видеопамяти. Сверьте пиковое потребление. Файл подкачки дополняет ОЗУ, но не видеопамять. Если на C: мало места, перенесите его на D: и убедитесь, что он активен.",
+    "Защита в реальном времени｜Сопоставьте время сканирования и тайм-аутов. Меняйте защиту только для согласованного с ИТ-службой теста; после него восстановите настройки.",
+    "Электропитание｜Проверьте схему высокой производительности или максимальной производительности, если она поддерживается и разрешена на площадке. Проверьте параметры схемы.",
+    "Частота GPU｜Используйте только согласованную инструкцию и файлы для установленной видеокарты и версии драйвера.",
+    "Если тайм-аут сохраняется｜Передайте специалисту скорость линии, станцию, размер кадров, число кадров в серии и конфигурацию ПК. При уменьшении числа или размера кадров либо переходе на мозаику повторно проверьте время обработки и выявление дефектов."
+  ],
+  "tr": [
+    "Derin öğrenme ile kontrolde zaman aşımı: sorun giderme ve sistem ayarları",
+    "Endüstriyel bilgisayara sistem imajı geri yüklendikten sonra kontrol süresi aşılırsa bu adımları izleyin.",
+    "Kontrol adımlarını göster",
+    "GPU ayarları｜Sürücüyü kurduktan sonra NVIDIA Denetim Masası’nda düşük gecikme modunun Ultra, güç yönetiminin maksimum performansı tercih edecek şekilde ayarlandığını kontrol edin.",
+    "Bellek｜Model başına yaklaşık 5 GB RAM ve 1 GB ekran kartı belleği öngörülür. En yüksek kullanımı ölçün. Disk belleği dosyası RAM’i destekler, ekran kartı belleğinin yerini tutmaz. C: doluysa dosyayı D: sürücüsüne taşıyıp etkin olduğunu doğrulayın.",
+    "Gerçek zamanlı koruma｜Taramaların zaman aşımıyla çakışıp çakışmadığına bakın. Koruma ayarlarını yalnızca saha BT ekibinin onayladığı kontrollü testte değiştirin; ardından geri yükleyin.",
+    "Güç planı｜Windows Güç Seçenekleri’nde Yüksek performans planını, destekleniyor ve sahada onaylanıyorsa Nihai performans planını ve ilgili ayarları kontrol edin.",
+    "GPU saat hızı｜Yalnızca takılı GPU ve sürücü için onaylanmış saat hızı ayarlarını ve talimatları kullanın.",
+    "Sorun sürerse｜Hat hızını, istasyonu, görüntü boyutunu, sekans başına kare sayısını ve bilgisayar donanımını kaydedin. Kare sayısı veya boyutu azaltılırsa ya da görüntüler birleştirilirse işlem süresini ve kusur tespitini yeniden doğrulayın."
+  ],
+  "es": [
+    "Tiempo de espera agotado en la inspección por aprendizaje profundo",
+    "Comprobaciones tras restaurar la imagen del PC industrial.",
+    "Ver pasos de diagnóstico",
+    "GPU｜Tras instalar el controlador, compruebe en el panel de NVIDIA que el modo de baja latencia esté en Ultra y que la gestión de energía dé prioridad al máximo rendimiento.",
+    "Memoria｜Como referencia, calcule 5 GB de RAM y 1 GB de memoria de vídeo por modelo. Compruebe los picos de uso. El archivo de paginación complementa la RAM, no la memoria de vídeo. Si falta espacio en C:, trasládelo a D: y verifique que siga activo.",
+    "Protección en tiempo real｜Compruebe si los análisis coinciden con los tiempos de espera agotados. Modifique la protección solo en pruebas autorizadas por TI y restáurela al terminar.",
+    "Plan de energía｜Compruebe el plan de alto rendimiento de Windows o el de máximo rendimiento si el equipo lo admite y el centro lo autoriza. Revise la configuración del plan.",
+    "Frecuencia de la GPU｜Utilice únicamente el procedimiento y los archivos aprobados para la GPU y el controlador instalados.",
+    "Si persiste el problema｜Anote la velocidad de línea, la estación, las dimensiones de imagen, las tomas por secuencia y el hardware del PC. Si cambia el número o el tamaño de las imágenes o pasa a procesarlas en mosaico, vuelva a validar el tiempo y la detección de defectos."
+  ],
+  "it": [
+    "Timeout dell’ispezione con deep learning: diagnosi e configurazione",
+    "Controlli da eseguire dopo il ripristino dell’immagine del PC industriale.",
+    "Mostra i controlli",
+    "GPU｜Installato il driver, verificare nel pannello NVIDIA che la modalità a bassa latenza sia su Ultra e che la gestione dell’alimentazione privilegi le prestazioni massime.",
+    "Memoria｜Stimare circa 5 GB di RAM e 1 GB di memoria video per modello e verificare i picchi reali. Il file di paging integra la RAM, non la memoria video. Se C: ha poco spazio, spostarlo su D: e verificarne l’attivazione.",
+    "Protezione in tempo reale｜Verificare se le scansioni coincidono con i timeout. Modificare la protezione solo per una prova controllata autorizzata dal reparto IT e ripristinarla al termine.",
+    "Alimentazione｜Verificare il piano Prestazioni elevate di Windows o, se supportato e approvato, Prestazioni eccellenti. Controllare le impostazioni del piano.",
+    "Frequenza della GPU｜Utilizzare solo la procedura e i file approvati per la GPU e il driver installati.",
+    "Se il timeout persiste｜Annotare velocità di linea, stazione, dimensioni delle immagini, fotogrammi per sequenza e hardware del PC. Dopo aver ridotto il numero o le dimensioni delle immagini o scelto l’elaborazione a mosaico, convalidare nuovamente i tempi e il rilevamento dei difetti."
+  ]
+};
+  const renderTimeoutGuide = code => {
+    const grid = document.querySelector("#support .workflow-grid");
+    if (!grid) return;
+    let card = grid.querySelector("[data-timeout-guide]");
+    if (!card) {
+      card = document.createElement("article");
+      card.className = "workflow-card";
+      card.dataset.timeoutGuide = "";
+      card.style.gridColumn = "1 / -1";
+      card.innerHTML = '<span class="workflow-card-index">05</span><h2></h2><p></p><details><summary class="workflow-card-link" style="cursor:pointer"></summary><ol></ol></details>';
+      grid.appendChild(card);
+    }
+    const [title, lead, action, ...steps] = timeoutGuide[code] || timeoutGuide.zh;
+    card.querySelector("h2").textContent = title;
+    card.querySelector("p").textContent = lead;
+    card.querySelector("summary").textContent = action;
+    card.querySelector("ol").replaceChildren(...steps.map(step => {
+      const [heading, body] = step.split("｜");
+      const li = document.createElement("li");
+      const label = document.createElement("strong");
+      label.textContent = heading;
+      const p = document.createElement("p");
+      p.textContent = body;
+      li.append(label, p);
+      return li;
+    }));
+  };
   const renderLanguage = code => {
     language = currentRole === "customer" && translations[code] ? code : "zh";
+    renderTimeoutGuide(language);
     if (currentRole === "customer") customerLanguage = language;
     if (languageSelect && languageSelect.value !== language) languageSelect.value = language;
     document.querySelectorAll("[data-workflow-i18n]").forEach(element => {
