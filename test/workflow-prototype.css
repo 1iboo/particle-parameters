@@ -137,6 +137,28 @@
 }
 
 .workflow-card { padding: 22px; }
+#support { padding-block-start: clamp(20px, 4vw, 48px); }
+#support .workflow-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+#support .workflow-card { position: relative; padding: 16px 18px 16px 66px; min-width: 0; overflow-wrap: anywhere; }
+#support .workflow-card-index { position:absolute; left:16px; top:16px; width:34px; height:34px; margin:0; }
+#support .workflow-card h2 { font-size:1.18rem; line-height:1.45; }
+#support .workflow-card > p { margin-top:4px; }
+#support [data-timeout-guide] { border-top:3px solid var(--teal); }
+#support [data-timeout-guide] summary { cursor:pointer; padding:8px 0; }
+#support [data-timeout-guide] ol { margin:12px 0 0; padding:0; list-style:none; counter-reset:guide; }
+#support [data-timeout-guide] li { counter-increment:guide; border-top:1px solid var(--border); padding:18px 0; }
+#support [data-timeout-guide] li > strong::before { content:counter(guide, decimal-leading-zero) " / "; color:var(--teal); }
+#support [data-timeout-guide] li > p { max-width:76ch; margin:6px 0 0; }
+.timeout-gallery { display:flex; flex-wrap:wrap; gap:12px; margin-top:12px; }
+.timeout-gallery a { display:grid; width:min(100%,260px); border:1px solid var(--border); border-radius:8px; overflow:hidden; text-decoration:none; background:white; cursor:zoom-in; }
+.timeout-gallery img { display:block; width:100%; height:135px; object-fit:contain; }
+.timeout-gallery span { padding:6px 10px; background:var(--alternate); color:var(--navy); font-size:.9rem; }
+@media (max-width:720px) {
+  #support .workflow-grid { grid-template-columns:minmax(0,1fr); }
+  #support [data-timeout-guide] details { margin-left:-48px; }
+  #support [data-timeout-guide] summary { margin-left:48px; }
+  .timeout-gallery a { width:100%; }
+}
 .workflow-card h2,
 .workflow-panel h2 { margin: 0; color: var(--navy); }
 .workflow-card p { margin: 10px 0 0; color: var(--muted); line-height: 1.65; }

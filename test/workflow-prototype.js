@@ -471,7 +471,9 @@
     card.querySelector("h2").textContent = title;
     card.querySelector("p").textContent = lead;
     card.querySelector("summary").textContent = action;
-    card.querySelector("ol").replaceChildren(...steps.map(step => {
+    const photos = [[1,2],[3,4],[5],[6,7],[8],[]];
+    const zoom = ({zh:"查看原图", en:"Open full-size image", fr:"Agrandir l’image", ru:"Открыть оригинал", tr:"Tam boyutta aç", es:"Ampliar imagen", it:"Apri a grandezza naturale"})[code] || "Open full-size image";
+    card.querySelector("ol").replaceChildren(...steps.map((step, index) => {
       const [heading, body] = step.split("｜");
       const li = document.createElement("li");
       const label = document.createElement("strong");
@@ -479,6 +481,25 @@
       const p = document.createElement("p");
       p.textContent = body;
       li.append(label, p);
+      if (photos[index].length) {
+        const gallery = document.createElement("div");
+        gallery.className = "timeout-gallery";
+        photos[index].forEach((id, i) => {
+          const link = document.createElement("a");
+          link.href = "media/dl-timeout/step-image-" + id + ".png";
+          link.target = "_blank";
+          link.rel = "noopener";
+          const img = document.createElement("img");
+          img.src = link.href;
+          img.loading = "lazy";
+          img.alt = heading + " · " + (i + 1);
+          const caption = document.createElement("span");
+          caption.textContent = (i + 1) + "/" + photos[index].length + " · " + zoom;
+          link.append(img, caption);
+          gallery.append(link);
+        });
+        li.append(gallery);
+      }
       return li;
     }));
   };
