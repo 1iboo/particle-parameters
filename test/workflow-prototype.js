@@ -503,9 +503,96 @@
       return li;
     }));
   };
+  // Browser-only Chinese maintenance demo. Never alter the published guide.
+  const draftKey = "ivs:test:support:dl-timeout:zh:v1";
+  function openGuideEditor() {
+    if (!["developer","admin"].includes(currentRole)) return;
+    const dialog = document.createElement("dialog");
+    dialog.className = "guide-editor";
+    dialog.setAttribute("aria-label","维护预览 · 深度学习检测超时");
+    const create = (tag, text, parent) => {
+      const el = document.createElement(tag);
+      if (text != null) el.textContent = text;
+      if (parent) parent.append(el);
+      return el;
+    };
+    const initial = () => ({
+      title:timeoutGuide.zh[0], lead:timeoutGuide.zh[1],
+      steps:timeoutGuide.zh.slice(3).map((line,i) => {
+        const [heading,body] = line.split("｜");
+        return {heading,body,images:([[1,2],[3,4],[5],[6,7],[8],[]][i]).map(n=>"media/dl-timeout/step-image-"+n+".png")};
+      })
+    });
+    let data = initial(), notice="";
+    try { const raw=localStorage.getItem(draftKey); if(raw){
+      const v=JSON.parse(raw);
+      if(typeof v.title!=="string" || typeof v.lead!=="string" || !Array.isArray(v.steps) || !v.steps.every(s=>s && typeof s.heading==="string" && typeof s.body==="string" && Array.isArray(s.images) && s.images.every(src=>typeof src==="string" && /^(media\/dl-timeout\/step-image-[1-8]\.png$|data:image\/(png|jpeg|webp);base64,)/.test(src)))) throw Error();
+      data=v; notice="已载入本机草稿";
+    }} catch {notice="本机草稿无法读取，已显示原文";}
+    let dirty=false,preview=false,loading=false;
+    const button=(parent,text,fn)=>{const b=create("button",text,parent);b.type="button";b.onclick=fn;return b};
+    const close=()=>{if(!loading && (!dirty||confirm("退出并放弃未保存的改动？"))) dialog.close()};
+    dialog.oncancel=e=>{e.preventDefault();close()};
+    dialog.onclose=()=>dialog.remove();
+    const render=()=>{
+      dialog.replaceChildren();
+      const head=create("header",null,dialog);
+      create("h2",preview?"草稿预览":"编辑第 05 项",head);
+      button(head,"关闭",close);
+      create("p","维护演示 · 中文草稿仅保存在当前浏览器，不会发布或同步给同事。",dialog);
+      const status=create("p",notice,dialog);status.setAttribute("role","status");
+      const field=(parent,label,obj,key,long=false)=>{
+        const l=create("label",label,parent), el=create(long?"textarea":"input",null,l);
+        el.value=obj[key];el.oninput=()=>{obj[key]=el.value;dirty=true;status.textContent="有未保存的改动"};
+      };
+      if(preview){create("h3",data.title,dialog);create("p",data.lead,dialog)}
+      else {field(dialog,"标题",data,"title");field(dialog,"适用场景",data,"lead",true)}
+      data.steps.forEach((step,i)=>{
+        const sec=create("section",null,dialog);
+        create("h3",preview?(i+1)+" · "+step.heading:"步骤 "+(i+1),sec);
+        if(preview)create("p",step.body,sec);else{field(sec,"步骤名称",step,"heading");field(sec,"说明",step,"body",true)}
+        const gallery=create("div",null,sec);gallery.className="editor-images";
+        step.images.forEach((src,j)=>{const fig=create("figure",null,gallery),img=create("img",null,fig);
+          img.src=src;img.alt=step.heading+" "+(j+1);
+          if(!preview)button(fig,"移除图片",()=>{step.images.splice(j,1);dirty=true;render()});
+        });
+        if(!preview){
+          const l=create("label","添加配图（PNG、JPG 或 WebP，每张不超过 1 MB）",sec);
+          const input=create("input",null,l);input.type="file";input.accept="image/png,image/jpeg,image/webp";
+          input.onchange=()=>{const f=input.files[0];if(!f)return;
+            if(!["image/png","image/jpeg","image/webp"].includes(f.type)||f.size>1048576){status.textContent="图片格式不支持或超过 1 MB";input.value="";return}
+            const r=new FileReader();loading=true;dialog.querySelectorAll("button,input,textarea").forEach(e=>e.disabled=true);
+            r.onload=()=>{step.images.push(r.result);dirty=true;notice="配图已加入，请保存草稿"};
+            r.onerror=()=>{notice="图片读取失败"};r.onloadend=()=>{loading=false;render()};r.readAsDataURL(f);
+          };
+          button(sec,"删除此步骤",()=>{if(confirm("删除此步骤及其配图？")){data.steps.splice(i,1);dirty=true;render()}});
+        }
+      });
+      const bar=create("footer",null,dialog);
+      if(!preview)button(bar,"添加步骤",()=>{data.steps.push({heading:"",body:"",images:[]});dirty=true;render()});
+      button(bar,preview?"返回编辑":"预览效果",()=>{preview=!preview;render();dialog.scrollTop=0});
+      button(bar,"保存本机草稿",()=>{if(!data.title.trim() || !data.steps.length || data.steps.some(s=>!s.heading.trim()||!s.body.trim())){status.textContent="请填写标题，并为每个步骤填写名称和说明";dialog.scrollTop=0;return}
+        try{localStorage.setItem(draftKey,JSON.stringify(data));dirty=false;notice="已保存到当前浏览器"}catch{notice="浏览器空间不足或禁止存储；草稿尚未保存，请减少配图"}
+        status.textContent=notice;dialog.scrollTop=0;
+      });
+      button(bar,"恢复原文",()=>{if(confirm("清除本机草稿并恢复为已发布原文？")){
+        try{localStorage.removeItem(draftKey)}catch{status.textContent="无法清除本机草稿";return}
+        data=initial();dirty=false;notice="已恢复原文";render();dialog.scrollTop=0;
+      }});
+    };
+    document.body.append(dialog);render();dialog.showModal();
+  }
+  function refreshEditorEntry(){
+    const card=document.querySelector("[data-timeout-guide]");if(!card)return;
+    let btn=card.querySelector(".guide-edit-entry");
+    if(!btn){btn=document.createElement("button");btn.type="button";btn.className="guide-edit-entry";btn.textContent="编辑本页（维护预览）";btn.onclick=openGuideEditor;card.append(btn)}
+    btn.hidden=!["developer","admin"].includes(currentRole);
+  }
+  window.addEventListener("prototype-role-change",refreshEditorEntry);
   const renderLanguage = code => {
     language = currentRole === "customer" && translations[code] ? code : "zh";
     renderTimeoutGuide(language);
+    refreshEditorEntry();
     if (currentRole === "customer") customerLanguage = language;
     if (languageSelect && languageSelect.value !== language) languageSelect.value = language;
     document.querySelectorAll("[data-workflow-i18n]").forEach(element => {

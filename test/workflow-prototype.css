@@ -137,6 +137,21 @@
 }
 
 .workflow-card { padding: 22px; }
+.guide-edit-entry,.guide-editor button { cursor:pointer; padding:.55rem .8rem; border:1px solid var(--border); border-radius:7px; background:white; color:var(--navy); font:inherit; }
+.guide-edit-entry { margin-top:.6rem; }
+.guide-editor { width:min(48rem,94vw); max-height:90vh; box-sizing:border-box; overflow:auto; padding:clamp(12px,3vw,28px); border:1px solid var(--border); border-radius:16px; color:var(--navy); }
+.guide-editor::backdrop { background:#112b40aa; }
+.guide-editor header,.guide-editor footer,.editor-images { display:flex; align-items:center; gap:.6rem; flex-wrap:wrap; }
+.guide-editor header { justify-content:space-between; }
+.guide-editor h2,.guide-editor h3 { margin:.35rem 0; }
+.guide-editor label { display:grid; gap:.35rem; margin:.75rem 0; font-weight:600; }
+.guide-editor input,.guide-editor textarea { box-sizing:border-box; width:100%; padding:.6rem; font:inherit; color:inherit; border:1px solid var(--border); border-radius:6px; }
+.guide-editor textarea { min-height:5rem; resize:vertical; }
+.guide-editor section { padding:1rem 0; border-top:1px solid var(--border); }
+.guide-editor p { white-space:pre-line; overflow-wrap:anywhere; }
+.guide-editor footer { position:sticky; bottom:0; background:white; border-top:1px solid var(--border); padding:.65rem 0; }
+.editor-images figure { margin:0; width:min(100%,13rem); }
+.editor-images img { display:block; width:100%; height:7rem; object-fit:contain; }
 #support { padding-block-start: clamp(20px, 4vw, 48px); }
 #support .workflow-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
 #support .workflow-card { position: relative; padding: 16px 18px 16px 66px; min-width: 0; overflow-wrap: anywhere; }
