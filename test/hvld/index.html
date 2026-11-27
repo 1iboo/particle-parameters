@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>明森高压电源 · 使用与故障码速查</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f2f6f8;color:#17384b;font:16px/1.65 system-ui,sans-serif}header{background:#123348;color:white;padding:18px max(5%,calc((100% - 920px)/2))}header a{color:#bdedf0}main{max-width:960px;margin:auto;padding:20px}h1{font-size:clamp(24px,4vw,36px);margin:12px 0 0}header p{margin:3px 0}nav{display:flex;gap:8px;margin-bottom:16px}nav a{padding:8px 16px;border-radius:8px;color:#075966;background:white;text-decoration:none}nav a[aria-current]{background:#096574;color:white}article,details,.panel{background:white;border:1px solid #cfdee4;border-radius:12px;padding:14px 18px;margin:10px 0}h2,h3,p{margin:5px 0}summary{font-weight:650;cursor:pointer}.limit{color:#096574;font-size:2rem}.warn{border-left:4px solid #bf760a}.meta,small{color:#4c6472}input{display:block;width:100%;font:inherit;padding:10px;border:1px solid #819aa5;border-radius:6px}button{font:inherit;cursor:pointer;margin:6px 5px 0 0}.code{font-family:monospace;color:#096574}footer{margin:24px 0;color:#526a78}a{color:#075966}[hidden]{display:none}
+</style>
+<header><a href="../#support">‹ 返回问题排查</a><h1>明森高压电源</h1><p>高压微孔检漏（HVLD） · 现场速查</p></header>
+<main><nav aria-label="手册栏目"><a href="#usage">使用与参数</a><a href="#faults">故障码速查</a></nav>
+<section id="usage"><article><h2>设定电压</h2><strong class="limit">0～22 kV</strong><p>本项目允许设定范围，含上下限。22 kV 是上限，不是默认值或推荐设定值。生产使用本产品规格经验证的电压。</p><p class="meta">手册所述 28 kV 是该档电源的设计上限，不是本项目的参数上限。本页仅供查阅，不向设备写入参数。</p></article>
+<article class="warn"><h3>高压安全</h3><p>输出高压期间不得更改电源参数、打开机箱或触碰高压回路；不得短接或拆除联锁。检修须由授权专业人员按现场安全规程断电、隔离，并确认储能已完全释放后进行。</p></article>
+<details><summary>按产品规格验证电压</summary><p>按瓶型、壁厚、材质、药液及装量确认工艺条件。使用标准阳性、阴性样品验证，在允许范围内选择满足检测灵敏度的最低电压。更换规格时使用对应的已验证配方，不照搬其他规格的数值。</p></details>
+<details><summary>工位联锁与异常放电</summary><p>无瓶时不得输出高压。更换瓶型或调整电极后应按规程复核电极位置和间隙。异常拉弧或反复报警时，停止使用并交授权人员排查，不靠提高电压补偿。</p></details>
+<details><summary>点检与异常记录</summary><p>每班检查面板、风扇、异味异响、电极清洁度及样品验证结果。发生异常时记录设定值、显示值、面板错误号、运行时长和剔废情况，保留记录供维修判断。</p></details>
+<footer>依据：《高压电源使用注意事项》，2026-11-17。电压分档见原手册 §2.4。</footer></section>
+<section id="faults" hidden><div class="panel"><h2>故障码速查</h2><p>适用：T126 系主板及配套显示板。按面板原样输入，默认按十六进制解释。</p>
+<label for="query">面板错误号或中文关键词</label><input id="query" autocomplete="off" placeholder="如 07、0C、19 或“漏电”">
+<small>面板 19 = 0x19 = 十进制 25；不是十进制 19。以下“含义”为手册解释，不一定是面板显示文字。</small></div>
+<details><summary>发生保护动作，但没有显示错误号？</summary><p>手册区分保护动作与上报故障：降额、短时关断等可先于报错发生。没有错误号不表示设备正常；记录现象、运行条件及后续报码，交授权人员核查。</p></details>
+<p id="count" role="status"></p><div id="results"></div><footer>依据：《高压电源故障代码及处理一览表》，2026-11-26。锁存类故障须先查明原因，不以反复重启代替检修。</footer></section></main>
+<script src="faults.js"></script></html>
