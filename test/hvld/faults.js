@@ -24,13 +24,41 @@ const rows=[
 ["80","参数存储异常（EEPROM）","显示板尝试回退备份或出厂值。重新投入使用前，按批准配方核对恢复后的参数。"]
 ];
 const local=new Set(["14","16","18","80"]);
+// 面板映射、触发、设备动作、恢复（T126 系；不公开内部源码笔记）。
+const info={
+"02":["电源过热","温度采样高于高温保护值或低于下限。","停输出；高温档还会断开主继电器。","温度恢复后设备重新检查，满足条件后软启动。"],
+"03":["水流故障","启用了相应输入，且外部停机输入有效。","停止输出。","输入恢复后复查清除；不能仅凭名称断定为水路本体故障。"],
+"04":["","控制占空比达到上限且反馈持续过低约 2.5 秒。","停止输出、断主继电器，锁存并周期上报。","面板不能解除。排除原因后由授权人员按规程断电重启。"],
+"06":["系统干扰","严重过流或相关硬件保护事件；文本不等于已查明外部电磁干扰。","立即停止输出，退避重试，分段恢复并观察。","可自动恢复；重试过密、累计过量或验证未通过可转为锁存码 07。"],
+"07":["电源过流","保护次数、热累计、打火配额或恢复验证达到锁存条件。","停输出、断主继电器并周期上报。","先留存记录、排除原因，再由授权人员按规程断电重启。"],
+"08":["设定值过大","当前固件没有有效触发源，属历史保留。","不作为实际限幅保护使用。","不适用。"],
+"09":["设定值过小","当前固件没有有效触发源，属历史保留。","不作为实际限幅保护使用。","不适用。"],
+"0A":["启动故障","主继电器断开时检测到母线采样过低或压差过大。","停止输出并断继电器，重建采样范围后复查。","电压稳定、复查通过后自动清除。"],
+"0B":["输出不平衡","相应输入触发；手册所述机型该输入已停用。","仅在启用配置下，低压时先停输出再复查。","启用配置下信号消失后清除。"],
+"0C":["电源漏电","漏电持续约 50 ms，或间歇事件累计达到 5 次。","先斩波，确认后停止输出。","泄漏信号消失后复查清除；保护自行清除不代替现场查因。"],
+"0D":["电源电压过低","启动或复查时电压采样低于下限。","上报并延时等待。","电压回升后自动清除。"],
+"0E":["电源电压过高","电压采样达到上限。","断主继电器、闪灯，重新跟踪电压。","电压回落后复查清除。"],
+"10":["","运行中检测到母线最大、最小采样值的差超过门限。","清除旧跟踪值、重新采样；本项不停机。","上报后自动清除。"],
+"13":["","主板看门狗或复位输入异常。","整机锁存，断主继电器并周期上报。","查明原因后按规程断电；面板操作不能清除。"],
+"14":["","显示板自身出现异常复位。","显示板提示并写记录，继续运行。","不是主板停机锁存；保留记录，重复出现时联系维修。"],
+"15":["","主板异常复位且伴有欠压证据。","主继电器断开，整机锁存。","保留记录并核查供电，排除原因后按规程断电。"],
+"16":["","显示板异常复位且伴有欠压记录。","显示板提示、写记录，继续运行。","核对供电及复发情况，不按主板锁存故障处理。"],
+"17":["","主板程序异常进入陷阱流程。","停止输出、断主继电器并尝试留痕；主程序异常时可能无法正常上报。","原表未给出可靠的自动恢复方式；停用报修。"],
+"18":["","本版打火累计达到 10 万次（旧版门限不同）。","显示板提示寿命预警，不自动停机。","安排检修或高压包评估；非主板锁存。"],
+"19":["","反馈低于设定值的 40%，同时占空比到顶或电流达到 L1，持续约 3 秒。","停输出并断主继电器，保护锁存。","排除原因后按规程断电重启。报码与高压包退化相关，但不能凭此直接判定换件。"],
+"1B":["","反馈持续在设定值约 40%～95%，电流达到 L1 且占空比到顶约 3 秒。","执行一次间歇保护，关断、记账后限速恢复。","本码上报后清除；累计 10 次间歇保护可转为 07。"],
+"1C":["","打火小时配额达到预警线 180（锁存线 300 的 60%）。","仅预警，上报一次，不停机。","累计值回落后自动复位。核对瓶型、电极、已验证电压。"],
+"80":["","当前参数存储区校验失败。","优先回退至备份区；备份也失败则恢复出厂默认。","设备可能继续运行；人员必须按批准配方重新核对参数，不能把默认值当作已验证值。"]
+};
 const q=document.querySelector("#query"),out=document.querySelector("#results");
 function search(){
  const s=q.value.trim(),hex=/^(?:0x)?([a-f\d]{1,2})$/i.exec(s);
- const found=rows.filter(([k,n,d])=>!s||(hex?k===hex[1].toUpperCase().padStart(2,"0"):(n+d).includes(s)));
+ const found=rows.filter(([k,n,d])=>!s||(hex?k===hex[1].toUpperCase().padStart(2,"0"):(n+d+info[k].join("")).includes(s)));
  out.replaceChildren();document.querySelector("#count").textContent=found.length?"共 "+found.length+" 条":"未找到匹配项。请核对面板字符和固件版本。";
  for(const [k,n,d] of found){const a=document.createElement("article");
- for(const [tag,str] of [["small",(local.has(k)?"显示板本地码":"主板故障码")+" · 十进制 "+parseInt(k,16)],["h3","0x"+k+"　"+n],["p",d]]){const el=document.createElement(tag);el.textContent=str;a.append(el)}out.append(a)}
+ for(const [tag,str] of [["small",(local.has(k)?"显示板本地码":"主板故障码")+" · 十进制 "+parseInt(k,16)],["h3","0x"+k+"　"+n],["p",d]]){const el=document.createElement(tag);el.textContent=str;a.append(el)}
+ const box=document.createElement("details"),sum=document.createElement("summary"),dl=document.createElement("dl");sum.textContent="查看触发、动作与恢复";box.append(sum,dl);
+ ["面板文本","触发条件","设备动作","恢复与现场注意"].forEach((label,i)=>{const dt=document.createElement("dt"),dd=document.createElement("dd");dt.textContent=label;dd.textContent=info[k][i]||"原表未列故障文字，按面板编号识别。";dl.append(dt,dd)});a.append(box);out.append(a)}
 }
-function route(){const faults=location.hash==="#faults";document.querySelector("#usage").hidden=faults;document.querySelector("#faults").hidden=!faults;document.querySelectorAll("nav a").forEach(a=>{if(a.hash===(faults?"#faults":"#usage"))a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")})}
+function route(){const sections=[...document.querySelectorAll("main>section")];const current=sections.find(s=>"#"+s.id===location.hash)||sections[0];sections.forEach(s=>s.hidden=s!==current);document.querySelectorAll("nav a").forEach(a=>{if(a.hash==="#"+current.id)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")})}
 q.addEventListener("input",search);window.addEventListener("hashchange",route);search();route();
